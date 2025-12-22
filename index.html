@@ -1,0 +1,1319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- IMPORTANT: यह viewport tag mobile के लिए जरूरी है -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="description" content="Taste Viva Life - Discover the best gourmet recipes with step-by-step video tutorials and downloadable PDF guides. Cook restaurant-quality meals at home!">
+    <meta name="keywords" content="Recipes, Cooking, Food, PDF Recipes, Taste Viva Life, Gourmet Cooking, Step-by-Step Recipes, Cooking Videos">
+    <title>Taste Viva Life | Premium Recipes & Cooking Guides</title>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #e74c3c;
+            --primary-dark: #c0392b;
+            --secondary: #2c3e50;
+            --light: #f9f9f9;
+            --light-gray: #f5f5f5;
+            --medium-gray: #e0e0e0;
+            --dark-gray: #7f8c8d;
+            --success: #27ae60;
+            --shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            --radius: 12px;
+            --transition: all 0.3s ease;
+            
+            /* Responsive font sizes */
+            --fs-h1: clamp(2rem, 5vw, 2.5rem);
+            --fs-h2: clamp(1.5rem, 4vw, 2rem);
+            --fs-h3: clamp(1.2rem, 3vw, 1.4rem);
+            --fs-body: clamp(14px, 2.5vw, 16px);
+            --fs-small: clamp(12px, 2vw, 14px);
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent; /* Mobile touch highlight remove */
+        }
+        
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--light);
+            color: #333;
+            line-height: 1.6;
+            padding-bottom: 80px;
+            font-size: var(--fs-body);
+            overflow-x: hidden; /* Prevent horizontal scroll */
+            min-height: 100vh;
+        }
+        
+        /* Improved Header - Mobile First */
+        header {
+            background-color: white;
+            padding: 12px 5%;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.5rem, 4vw, 1.8rem);
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+        
+        .logo i {
+            font-size: clamp(1.2rem, 3vw, 1.5rem);
+        }
+        
+        .tagline {
+            font-size: clamp(10px, 1.5vw, 12px);
+            color: var(--dark-gray);
+            font-weight: 500;
+            margin-top: 2px;
+            display: block;
+            width: 100%;
+        }
+        
+        .auth-status {
+            font-size: clamp(12px, 2vw, 14px);
+            font-weight: 500;
+            color: var(--secondary);
+            background-color: var(--light-gray);
+            padding: 8px 12px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-shrink: 0;
+            white-space: nowrap;
+        }
+        
+        .auth-status a {
+            color: var(--primary);
+            font-weight: 600;
+            text-decoration: none;
+            font-size: clamp(11px, 1.8vw, 13px);
+            margin-left: 5px;
+            white-space: nowrap;
+        }
+        
+        /* Hero Section - Responsive */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                        url('https://images.unsplash.com/photo-1565958011703-44f9829ba187?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80');
+            background-size: cover;
+            background-position: center;
+            padding: clamp(30px, 5vw, 50px) 5%;
+            text-align: center;
+            color: white;
+            border-radius: 0 0 30px 30px;
+            margin-bottom: 30px;
+            min-height: clamp(300px, 50vh, 400px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: var(--fs-h1);
+            margin-bottom: clamp(10px, 2vw, 15px);
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: clamp(1rem, 2.5vw, 1.1rem);
+            max-width: 700px;
+            margin: 0 auto clamp(20px, 4vw, 30px);
+            opacity: 0.9;
+            padding: 0 10px;
+        }
+        
+        .search-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: var(--radius);
+            padding: clamp(15px, 3vw, 20px);
+            box-shadow: var(--shadow);
+            width: 100%;
+        }
+        
+        .search-box {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-direction: column; /* Mobile first - column layout */
+        }
+        
+        input, select {
+            padding: clamp(12px, 3vw, 14px) clamp(15px, 3vw, 20px);
+            border-radius: 50px;
+            border: 1px solid var(--medium-gray);
+            outline: none;
+            width: 100%;
+            font-size: clamp(14px, 2.5vw, 16px);
+            transition: var(--transition);
+            -webkit-appearance: none; /* Remove default styling on iOS */
+            appearance: none;
+        }
+        
+        /* Improve touch targets for mobile */
+        input, select, button {
+            min-height: 44px; /* Apple's recommended minimum touch target */
+        }
+        
+        input:focus, select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.2);
+        }
+        
+        .search-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: clamp(12px, 3vw, 14px) 20px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+            white-space: nowrap;
+            font-size: clamp(14px, 2.5vw, 16px);
+            width: 100%;
+        }
+        
+        .search-btn:hover, .search-btn:active {
+            background-color: var(--primary-dark);
+        }
+        
+        /* Stats Section - Responsive Grid */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin: 30px auto;
+            max-width: 1000px;
+            padding: 0 5%;
+        }
+        
+        .stat-item {
+            text-align: center;
+            background: white;
+            padding: clamp(15px, 3vw, 20px);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        
+        .stat-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stat-number {
+            font-size: clamp(1.8rem, 4vw, 2.2rem);
+            font-weight: 700;
+            color: var(--primary);
+            line-height: 1.2;
+        }
+        
+        .stat-label {
+            font-size: clamp(12px, 1.8vw, 14px);
+            color: var(--dark-gray);
+            margin-top: 5px;
+        }
+        
+        /* Recipe Grid - Responsive */
+        .container {
+            padding: 0 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: var(--fs-h2);
+            margin-bottom: clamp(20px, 3vw, 25px);
+            color: var(--secondary);
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 70px;
+            height: 3px;
+            background-color: var(--primary);
+        }
+        
+        .recipe-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
+            gap: clamp(15px, 3vw, 25px);
+            margin-bottom: 40px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .media-area {
+            height: clamp(180px, 30vw, 220px);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .media-area img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .card:hover .media-area img {
+            transform: scale(1.05);
+        }
+        
+        .media-area iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .video-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: rgba(231, 76, 60, 0.9);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            z-index: 2;
+        }
+        
+        .content {
+            padding: clamp(15px, 3vw, 20px);
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .cat-badge {
+            background: #ffeaa7;
+            color: #d63031;
+            padding: 5px 12px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .time-badge {
+            background-color: var(--light-gray);
+            color: var(--dark-gray);
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .card h3 {
+            font-size: var(--fs-h3);
+            margin-bottom: 10px;
+            color: var(--secondary);
+            line-height: 1.3;
+        }
+        
+        .card p {
+            font-size: clamp(13px, 2vw, 14px);
+            color: #666;
+            margin-bottom: 15px;
+            flex-grow: 1;
+        }
+        
+        .btn {
+            padding: clamp(10px, 2vw, 12px);
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: clamp(14px, 2vw, 15px);
+            min-height: 44px; /* Touch friendly */
+            width: 100%;
+        }
+        
+        .btn-pdf {
+            background-color: var(--secondary);
+            color: white;
+        }
+        
+        .btn-pdf:hover, .btn-pdf:active {
+            background-color: #1a252f;
+        }
+        
+        .btn-login {
+            background-color: var(--primary);
+            color: white;
+            width: 100%;
+        }
+        
+        .btn-login:hover, .btn-login:active {
+            background-color: var(--primary-dark);
+        }
+        
+        /* Footer - Responsive */
+        footer {
+            background-color: var(--secondary);
+            color: white;
+            padding: clamp(30px, 5vw, 40px) 5% 20px;
+            margin-top: 50px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: clamp(25px, 4vw, 40px);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .footer-section {
+            flex: 1;
+            min-width: 0; /* Important for flexbox shrinking */
+        }
+        
+        .footer-section h3 {
+            font-size: clamp(1.1rem, 2.5vw, 1.2rem);
+            margin-bottom: 15px;
+            color: white;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: var(--transition);
+            display: inline-block;
+            padding: 2px 0;
+            font-size: clamp(14px, 2vw, 15px);
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+            padding-left: 5px;
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #aaa;
+            font-size: clamp(12px, 2vw, 14px);
+        }
+        
+        /* PDF Hidden */
+        .pdf-template {
+            display: none;
+            padding: 40px;
+            font-family: 'Poppins', sans-serif;
+            background-color: white;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        /* Floating Chat - Mobile Friendly */
+        .fab {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            width: clamp(50px, 10vw, 60px);
+            height: clamp(50px, 10vw, 60px);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: clamp(20px, 4vw, 24px);
+            box-shadow: 0 5px 20px rgba(231, 76, 60, 0.4);
+            z-index: 900;
+            cursor: pointer;
+            border: none;
+            transition: var(--transition);
+        }
+        
+        .fab:hover, .fab:active {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(231, 76, 60, 0.5);
+        }
+        
+        /* Modal - Responsive */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(5px);
+            padding: 15px;
+            overflow-y: auto;
+        }
+        
+        .modal-box {
+            background: white;
+            width: 100%;
+            max-width: min(450px, 95vw);
+            padding: clamp(20px, 4vw, 30px);
+            border-radius: 20px;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            animation: modalSlideIn 0.3s ease;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        @keyframes modalSlideIn {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--dark-gray);
+            transition: var(--transition);
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .close:hover {
+            color: var(--primary);
+        }
+        
+        .modal h2, .modal h3 {
+            color: var(--secondary);
+            margin-bottom: 15px;
+            font-size: clamp(1.3rem, 3vw, 1.5rem);
+        }
+        
+        .modal input, .modal textarea {
+            width: 100%;
+            padding: clamp(12px, 2.5vw, 14px);
+            margin-bottom: 15px;
+            border: 1px solid var(--medium-gray);
+            border-radius: 8px;
+            font-size: clamp(14px, 2.5vw, 16px);
+            min-height: 44px;
+        }
+        
+        .modal textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        /* Chat History */
+        #chat-history {
+            height: clamp(150px, 30vh, 200px);
+            overflow-y: auto;
+            border: 1px solid #eee;
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #fafafa;
+            font-size: clamp(13px, 2vw, 14px);
+        }
+        
+        /* Desktop-specific improvements */
+        @media (min-width: 768px) {
+            .search-box {
+                flex-direction: row; /* Desktop पर row layout */
+            }
+            
+            .search-btn {
+                width: auto;
+                padding: 0 30px;
+            }
+            
+            .btn {
+                width: auto;
+                min-width: 150px;
+            }
+            
+            .footer-content {
+                display: flex;
+                justify-content: space-between;
+            }
+            
+            /* Improve desktop hover effects */
+            .card:hover .media-area:after {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.1);
+            }
+        }
+        
+        /* Mobile-specific adjustments */
+        @media (max-width: 767px) {
+            header {
+                flex-direction: column;
+                gap: 10px;
+                align-items: flex-start;
+            }
+            
+            .auth-status {
+                align-self: flex-end;
+                margin-top: -40px;
+            }
+            
+            .logo {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .tagline {
+                margin-left: 28px; /* Align with logo text */
+            }
+            
+            .hero {
+                min-height: clamp(250px, 40vh, 350px);
+            }
+            
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .modal-box {
+                padding: 20px 15px;
+            }
+            
+            /* Improve touch targets */
+            .footer-links a {
+                padding: 8px 0;
+            }
+        }
+        
+        /* Very small screens */
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: clamp(1.5rem, 6vw, 1.8rem);
+            }
+            
+            .hero p {
+                font-size: clamp(0.9rem, 3.5vw, 1rem);
+            }
+            
+            .section-title {
+                font-size: clamp(1.3rem, 5vw, 1.6rem);
+            }
+            
+            .stats {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .stat-item {
+                padding: 15px;
+            }
+            
+            .stat-number {
+                font-size: 1.8rem;
+            }
+            
+            .fab {
+                bottom: 20px;
+                right: 20px;
+            }
+            
+            .auth-status {
+                position: absolute;
+                top: 15px;
+                right: 5%;
+            }
+        }
+        
+        /* Large screens */
+        @media (min-width: 1200px) {
+            .container {
+                padding: 0 3%;
+            }
+            
+            .recipe-grid {
+                grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            }
+        }
+        
+        /* Prevent zoom on iOS input focus */
+        @media screen and (max-width: 768px) {
+            input, select, textarea {
+                font-size: 16px !important; /* Prevents iOS zoom on focus */
+            }
+        }
+        
+        /* Print styles */
+        @media print {
+            .fab, .search-container, .auth-status a {
+                display: none !important;
+            }
+        }
+        
+        /* Accessibility improvements */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+        
+        /* Focus styles for keyboard navigation */
+        button:focus, input:focus, select:focus, textarea:focus {
+            outline: 2px solid var(--primary);
+            outline-offset: 2px;
+        }
+        
+        /* Loading animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Rest of your HTML code remains the same as before -->
+    <header>
+        <div class="logo-container">
+            <a href="#" class="logo">
+                <i class="fas fa-utensils"></i> Taste Viva Life
+                <div class="tagline">Premium Recipes & Cooking Guides</div>
+            </a>
+        </div>
+        <div id="user-display" class="auth-status">
+            <i class="fas fa-user"></i>
+            <span>Guest Mode</span>
+            <a href="#" onclick="openAuthModal()">Sign In</a>
+        </div>
+    </header>
+
+    <div class="hero">
+        <h1>Discover Culinary Excellence</h1>
+        <p>Explore our collection of premium recipes with step-by-step video tutorials and downloadable PDF guides</p>
+        
+        <div class="search-container">
+            <div class="search-box">
+                <input type="text" id="search" placeholder="Search recipes (e.g., Biryani, Pasta, Salad)...">
+                <select id="filter">
+                    <option value="All">All Categories</option>
+                    <option value="Breakfast">Breakfast</option>
+                    <option value="Lunch">Lunch</option>
+                    <option value="Dinner">Dinner</option>
+                    <option value="Dessert">Dessert</option>
+                    <option value="Vegetarian">Vegetarian</option>
+                </select>
+                <button class="search-btn" onclick="renderRecipes()">
+                    <i class="fas fa-search"></i> Search
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="stats">
+        <div class="stat-item">
+            <div class="stat-number">500+</div>
+            <div class="stat-label">Premium Recipes</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">120+</div>
+            <div class="stat-label">Video Tutorials</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">50K+</div>
+            <div class="stat-label">Happy Cooks</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">24/7</div>
+            <div class="stat-label">Chef Support</div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2 class="section-title">Featured Recipes</h2>
+        <div id="recipe-grid" class="recipe-grid">
+            <!-- Recipes will be dynamically loaded here -->
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Taste Viva Life</h3>
+                <p>Your ultimate destination for gourmet recipes, cooking tutorials, and culinary inspiration.</p>
+                <div style="margin-top: 15px;">
+                    <a href="#" style="color: white; margin-right: 15px;"><i class="fab fa-facebook fa-lg"></i></a>
+                    <a href="#" style="color: white; margin-right: 15px;"><i class="fab fa-instagram fa-lg"></i></a>
+                    <a href="#" style="color: white; margin-right: 15px;"><i class="fab fa-youtube fa-lg"></i></a>
+                    <a href="#" style="color: white;"><i class="fab fa-pinterest fa-lg"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Recipes</a></li>
+                    <li><a href="#">Categories</a></li>
+                    <li><a href="#">Cooking Tips</a></li>
+                    <li><a href="#">About Us</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Legal</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Cookie Policy</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            &copy; 2023 Taste Viva Life. All rights reserved. | Designed for culinary enthusiasts worldwide.
+        </div>
+    </footer>
+
+    <button class="fab" onclick="handleChat()" aria-label="Chat with our chefs">
+        <i class="fas fa-comment-dots"></i>
+    </button>
+
+    <div id="auth-modal" class="modal">
+        <div class="modal-box">
+            <span class="close" onclick="closeModal('auth-modal')" aria-label="Close modal">&times;</span>
+            <h2 id="auth-title"><i class="fas fa-user-circle"></i> Sign In to Continue</h2>
+            <p style="margin-bottom: 20px; color: #666;">Access all premium features including PDF downloads and live chat with our chefs.</p>
+            
+            <input type="email" id="email" placeholder="Email Address" aria-label="Email address">
+            <input type="password" id="pass" placeholder="Password" aria-label="Password">
+            
+            <button class="btn btn-login" onclick="doAuth()">
+                <i class="fas fa-sign-in-alt"></i> Sign In
+            </button>
+            
+            <div style="text-align: center; margin-top: 20px;">
+                <p style="font-size: 14px; color: #666;">Don't have an account? 
+                    <a href="#" style="color: var(--primary); font-weight: 600;" onclick="toggleAuth()">Create Account</a>
+                </p>
+                <p style="font-size: 12px; color: #999; margin-top: 10px;">
+                    By signing in, you agree to our <a href="#" style="color: var(--primary);">Terms</a> and <a href="#" style="color: var(--primary);">Privacy Policy</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div id="chat-modal" class="modal">
+        <div class="modal-box">
+            <span class="close" onclick="closeModal('chat-modal')" aria-label="Close chat">&times;</span>
+            <h3><i class="fas fa-comments"></i> Chat with Our Chefs</h3>
+            <p style="font-size: 14px; color: #666; margin-bottom: 15px;">Get personalized cooking advice from our culinary experts.</p>
+            
+            <div id="chat-history" style="height: 200px; overflow-y: auto; border: 1px solid #eee; margin: 10px 0; padding: 15px; border-radius: 8px; background-color: #fafafa; font-size: 14px;"></div>
+            
+            <textarea id="msg-input" placeholder="Type your cooking question here..." rows="3"></textarea>
+            <button class="btn btn-login" onclick="sendMessage()">
+                <i class="fas fa-paper-plane"></i> Send Message
+            </button>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+
+    <script>
+        // Firebase and other JavaScript code remains the same as before
+        // Only adding mobile-specific improvements
+        
+        const firebaseConfig = {
+            apiKey: "AIzaSyCJxPo8K6unEMUKyPAVOqA-6mWpjldEjWE",
+            authDomain: "tastevivalife.42web.io",
+            databaseURL: "https://cooking-4f4ba-default-rtdb.firebaseio.com",
+            projectId: "cooking-4f4ba",
+            storageBucket: "cooking-4f4ba.firebasestorage.app",
+            messagingSenderId: "105635290604",
+            appId: "1:105635290604:web:15f4655d5340742306f4c9"
+        };
+        
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.database();
+
+        let recipes = [];
+        let isLoginMode = true;
+        let currentUser = null;
+
+        // Initialize the application
+        window.onload = () => {
+            // Load Recipes
+            db.ref('recipes').on('value', snap => {
+                recipes = [];
+                snap.forEach(c => recipes.push({id: c.key, ...c.val()}));
+                renderRecipes();
+            });
+
+            // Check Login & Ban Status
+            auth.onAuthStateChanged(user => {
+                currentUser = user;
+                if(user) {
+                    // Check if banned
+                    db.ref('users/' + user.uid).on('value', snap => {
+                        const data = snap.val();
+                        if(data && data.banned) {
+                            alert("Your account has been temporarily suspended. Please contact support.");
+                            auth.signOut();
+                        } else {
+                            document.getElementById('user-display').innerHTML = 
+                                `<i class="fas fa-user-check"></i> ${user.email.split('@')[0]} 
+                                <a href="#" onclick="auth.signOut()" style="color:var(--primary); margin-left:8px;">(Logout)</a>`;
+                            loadChatHistory();
+                            closeModal('auth-modal');
+                        }
+                    });
+                } else {
+                    document.getElementById('user-display').innerHTML = 
+                        `<i class="fas fa-user"></i> Guest Mode 
+                        <a href="#" onclick="openAuthModal()" style="color:var(--primary); margin-left:8px;">Sign In</a>`;
+                }
+            });
+            
+            // Add event listeners for search
+            document.getElementById('search').addEventListener('keyup', renderRecipes);
+            document.getElementById('filter').addEventListener('change', renderRecipes);
+            
+            // Add touch event listeners for better mobile experience
+            document.querySelectorAll('.btn').forEach(btn => {
+                btn.addEventListener('touchstart', function() {
+                    this.style.transform = 'scale(0.98)';
+                });
+                btn.addEventListener('touchend', function() {
+                    this.style.transform = '';
+                });
+            });
+            
+            // Prevent zoom on double-tap (for mobile)
+            let lastTouchEnd = 0;
+            document.addEventListener('touchend', function(event) {
+                const now = (new Date()).getTime();
+                if (now - lastTouchEnd <= 300) {
+                    event.preventDefault();
+                }
+                lastTouchEnd = now;
+            }, false);
+        };
+
+        // Render Recipes function remains the same
+        function renderRecipes() {
+            const term = document.getElementById('search').value.toLowerCase();
+            const cat = document.getElementById('filter').value;
+            const list = document.getElementById('recipe-grid');
+            list.innerHTML = '';
+
+            // If no recipes, show message
+            if (recipes.length === 0) {
+                list.innerHTML = `
+                    <div style="grid-column: 1 / -1; text-align: center; padding: 40px; background: white; border-radius: var(--radius);">
+                        <i class="fas fa-utensils" style="font-size: 48px; color: #ddd; margin-bottom: 15px;"></i>
+                        <h3>No Recipes Found</h3>
+                        <p>Recipes will appear here once loaded from the database.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            const filteredRecipes = recipes.filter(r => {
+                return (cat === 'All' || r.category === cat) && 
+                       (r.title.toLowerCase().includes(term) || 
+                        r.desc.toLowerCase().includes(term) ||
+                        r.category.toLowerCase().includes(term));
+            });
+
+            if (filteredRecipes.length === 0) {
+                list.innerHTML = `
+                    <div style="grid-column: 1 / -1; text-align: center; padding: 40px; background: white; border-radius: var(--radius);">
+                        <i class="fas fa-search" style="font-size: 48px; color: #ddd; margin-bottom: 15px;"></i>
+                        <h3>No Matching Recipes</h3>
+                        <p>Try a different search term or category.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            filteredRecipes.forEach(r => {
+                // Video Logic
+                let media = `<div class="media-area"><img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="${r.title}" loading="lazy"></div>`;
+                let videoBadge = '';
+                
+                if(r.videoUrl && r.videoUrl.includes('youtu')) {
+                    // Extract Video ID
+                    let vidId = r.videoUrl.split('v=')[1];
+                    if(!vidId && r.videoUrl.includes('youtu.be/')) vidId = r.videoUrl.split('youtu.be/')[1];
+                    const embedUrl = `https://www.youtube.com/embed/${vidId ? vidId.split('&')[0] : ''}`;
+                    media = `<div class="media-area"><iframe src="${embedUrl}" allowfullscreen></iframe></div>`;
+                    videoBadge = '<div class="video-badge"><i class="fas fa-play-circle"></i> Video</div>';
+                } else if (r.imgUrl) {
+                    media = `<div class="media-area"><img src="${r.imgUrl}" alt="${r.title}" loading="lazy">${videoBadge}</div>`;
+                }
+
+                // Generate random cooking time
+                const cookingTime = Math.floor(Math.random() * 60) + 15;
+
+                list.innerHTML += `
+                    <div class="card">
+                        ${media}
+                        ${videoBadge}
+                        <div class="content">
+                            <div class="card-header">
+                                <span class="cat-badge">${r.category}</span>
+                                <span class="time-badge"><i class="far fa-clock"></i> ${cookingTime} min</span>
+                            </div>
+                            <h3>${r.title}</h3>
+                            <p>${r.desc.substring(0, 100)}${r.desc.length > 100 ? '...' : ''}</p>
+                            <button class="btn btn-pdf" onclick="tryDownload('${r.id}')">
+                                <i class="fas fa-file-pdf"></i> Download Recipe PDF
+                            </button>
+                        </div>
+                        <div id="pdf-${r.id}" class="pdf-template">
+                            <h1 style="color:var(--primary); border-bottom: 2px solid #eee; padding-bottom: 10px;">${r.title}</h1>
+                            <div style="display: flex; justify-content: space-between; margin: 20px 0;">
+                                <div><strong>Category:</strong> ${r.category}</div>
+                                <div><strong>Prep Time:</strong> ${cookingTime} minutes</div>
+                            </div>
+                            <hr style="margin: 20px 0;">
+                            <h3 style="color: var(--secondary); margin: 20px 0 10px;">Recipe Description</h3>
+                            <p style="font-size: 16px; line-height: 1.8; margin-bottom: 30px;">${r.desc}</p>
+                            <div style="background-color: #f9f9f9; padding: 20px; border-radius: 8px; margin-top: 30px;">
+                                <p><i class="fas fa-info-circle" style="color: var(--primary);"></i> <strong>Note:</strong> For detailed video tutorial, visit our website.</p>
+                                <p style="margin-top: 10px; font-size: 14px;">Recipe provided by Taste Viva Life &copy; ${new Date().getFullYear()}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        // All other functions remain the same...
+        // Open Auth Modal
+        function openAuthModal() {
+            document.getElementById('auth-modal').style.display = 'flex';
+            // Focus on first input for better UX
+            setTimeout(() => document.getElementById('email').focus(), 100);
+        }
+
+        // Download PDF function
+        function tryDownload(id) {
+            if(!currentUser) {
+                document.getElementById('auth-modal').style.display = 'flex';
+                return;
+            }
+            
+            const element = document.getElementById('pdf-' + id);
+            element.style.display = 'block';
+            
+            const options = {
+                margin: 10,
+                filename: `${id}_Recipe.pdf`,
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+            
+            // Show loading state
+            const btn = event.target;
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<div class="loading"></div> Generating PDF...';
+            btn.disabled = true;
+            
+            html2pdf().set(options).from(element).save().then(() => {
+                element.style.display = 'none';
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }).catch(err => {
+                console.error(err);
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                alert('PDF generation failed. Please try again.');
+            });
+        }
+
+        // Handle Chat Button
+        function handleChat() {
+            if(!currentUser) {
+                document.getElementById('auth-modal').style.display = 'flex';
+            } else {
+                document.getElementById('chat-modal').style.display = 'flex';
+                document.getElementById('msg-input').focus();
+            }
+        }
+
+        // Authentication Logic
+        function doAuth() {
+            const e = document.getElementById('email').value;
+            const p = document.getElementById('pass').value;
+            if(!e || !p) return alert("Please fill in all fields");
+
+            // Show loading state
+            const btn = document.querySelector('#auth-modal .btn-login');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<div class="loading"></div> Processing...';
+            btn.disabled = true;
+
+            if(isLoginMode) {
+                auth.signInWithEmailAndPassword(e, p)
+                    .then(() => {
+                        closeModal('auth-modal');
+                        btn.innerHTML = originalText;
+                        btn.disabled = false;
+                    })
+                    .catch(err => {
+                        alert("Login failed: " + err.message);
+                        btn.innerHTML = originalText;
+                        btn.disabled = false;
+                    });
+            } else {
+                auth.createUserWithEmailAndPassword(e, p)
+                    .then(cred => {
+                        // Create user entry in DB
+                        db.ref('users/' + cred.user.uid).set({
+                            email: e,
+                            banned: false,
+                            joined: Date.now(),
+                            name: e.split('@')[0]
+                        });
+                        closeModal('auth-modal');
+                        btn.innerHTML = originalText;
+                        btn.disabled = false;
+                    })
+                    .catch(err => {
+                        alert("Registration failed: " + err.message);
+                        btn.innerHTML = originalText;
+                        btn.disabled = false;
+                    });
+            }
+        }
+
+        // Send Chat Message
+        function sendMessage() {
+            const txt = document.getElementById('msg-input').value.trim();
+            if(!txt) return;
+            
+            db.ref('messages').push({
+                uid: currentUser.uid,
+                email: currentUser.email,
+                text: txt,
+                reply: "",
+                timestamp: Date.now()
+            });
+            
+            document.getElementById('msg-input').value = '';
+        }
+
+        // Load Chat History
+        function loadChatHistory() {
+            if (!currentUser) return;
+            
+            db.ref('messages').orderByChild('uid').equalTo(currentUser.uid).on('value', snap => {
+                const box = document.getElementById('chat-history');
+                box.innerHTML = '';
+                
+                if (!snap.exists()) {
+                    box.innerHTML = '<div style="text-align: center; color: #999; padding: 20px;">No messages yet. Start a conversation with our chefs!</div>';
+                    return;
+                }
+                
+                const messages = [];
+                snap.forEach(c => messages.push({id: c.key, ...c.val()}));
+                
+                // Sort by timestamp
+                messages.sort((a, b) => a.timestamp - b.timestamp);
+                
+                messages.forEach(m => {
+                    box.innerHTML += `
+                        <div style="margin-bottom: 15px;">
+                            <div style="background-color: #e3f2fd; padding: 10px; border-radius: 8px; margin-bottom: 5px;">
+                                <strong>You:</strong> ${m.text}
+                            </div>
+                            ${m.reply ? 
+                                `<div style="background-color: #f1f8e9; padding: 10px; border-radius: 8px; margin-left: 15px;">
+                                    <strong><i class="fas fa-chef-hat"></i> Chef:</strong> ${m.reply}
+                                </div>` : 
+                                '<div style="font-size: 12px; color: #999; text-align: right;"><i>Waiting for reply...</i></div>'
+                            }
+                        </div>
+                    `;
+                });
+                
+                // Scroll to bottom
+                box.scrollTop = box.scrollHeight;
+            });
+        }
+
+        // Toggle between Login and Signup
+        function toggleAuth() {
+            isLoginMode = !isLoginMode;
+            const title = document.getElementById('auth-title');
+            const btn = document.querySelector('#auth-modal .btn-login');
+            
+            if(isLoginMode) {
+                title.innerHTML = '<i class="fas fa-user-circle"></i> Sign In to Continue';
+                btn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Sign In';
+            } else {
+                title.innerHTML = '<i class="fas fa-user-plus"></i> Create Your Account';
+                btn.innerHTML = '<i class="fas fa-user-plus"></i> Sign Up';
+            }
+        }
+
+        // Close Modal
+        function closeModal(id) { 
+            document.getElementById(id).style.display = 'none'; 
+        }
+
+        // Simulate initial recipes if Firebase is empty
+        setTimeout(() => {
+            if (recipes.length === 0) {
+                // Add some sample recipes for demo
+                recipes = [
+                    {
+                        id: "1",
+                        title: "Classic Beef Lasagna",
+                        desc: "A rich and hearty lasagna with layers of pasta, seasoned beef, creamy béchamel sauce, and melted cheese. Perfect for family dinners.",
+                        category: "Dinner",
+                        videoUrl: "https://www.youtube.com/watch?v=abcdefg"
+                    },
+                    {
+                        id: "2",
+                        title: "Avocado Toast Breakfast",
+                        desc: "Simple yet delicious avocado toast with cherry tomatoes, feta cheese, and a drizzle of olive oil. A healthy start to your day.",
+                        category: "Breakfast",
+                        imgUrl: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                    },
+                    {
+                        id: "3",
+                        title: "Chocolate Lava Cake",
+                        desc: "Decadent chocolate cake with a gooey molten center. Served warm with vanilla ice cream for the ultimate dessert experience.",
+                        category: "Dessert",
+                        videoUrl: "https://www.youtube.com/watch?v=hijklmn"
+                    }
+                ];
+                renderRecipes();
+            }
+        }, 1000);
+        
+        // Handle window resize for responsive behavior
+        let resizeTimer;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => {
+                // Re-render recipes on resize to adjust layout
+                renderRecipes();
+            }, 250);
+        });
+    </script>
+</body>
+</html>
