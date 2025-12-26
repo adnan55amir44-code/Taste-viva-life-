@@ -60,6 +60,34 @@
             font-size: 0.9rem;
         }
 
+        /* --- Star Rating Styles --- */
+        .star-rating {
+            display: flex;
+            gap: 10px;
+            margin: 15px 0;
+            cursor: pointer;
+            justify-content: center;
+        }
+
+        .star-rating i {
+            font-size: 28px;
+            color: #ddd;
+            transition: all 0.3s;
+        }
+
+        .star-rating i:hover {
+            transform: scale(1.2);
+        }
+
+        .star-rating i.selected {
+            color: gold;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+
+        .star-rating i.hovered {
+            color: #ffd700;
+        }
+
         /* --- Global Button Design --- */
         .btn-modern {
             padding: 12px 30px; border-radius: 50px; border: none; 
@@ -241,6 +269,9 @@
                 padding: 10px;
                 min-height: 70px;
             }
+            .star-rating i {
+                font-size: 24px;
+            }
         }
     </style>
 </head>
@@ -386,12 +417,17 @@
             </div>
             <div class="contact-form">
                 <div class="form-group">
-                    <input type="text" id="reviewName" placeholder="Your Name">
-                    <textarea id="reviewText" rows="5" placeholder="Your Message / Review"></textarea>
-                    <div style="margin-bottom: 20px; color: gold;">
-                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    <input type="text" id="reviewName" placeholder="Your Name" required>
+                    <textarea id="reviewText" rows="5" placeholder="Your Message / Review" required></textarea>
+                    <!-- Star Rating Container -->
+                    <div class="star-rating">
+                        <i class="fas fa-star" data-value="1"></i>
+                        <i class="fas fa-star" data-value="2"></i>
+                        <i class="fas fa-star" data-value="3"></i>
+                        <i class="fas fa-star" data-value="4"></i>
+                        <i class="fas fa-star" data-value="5"></i>
                     </div>
-                    <button class="btn-modern" onclick="submitReview()">Send Feedback</button>
+                    <button class="btn-modern" id="submitFeedbackBtn" onclick="submitReview()">Send Feedback</button>
                 </div>
             </div>
         </div>
@@ -462,6 +498,7 @@
         let isLogin = true;
         let currentUser = null;
         let pendingPdfUrl = null;
+        let selectedRating = 0;  // Star rating variable
         
         // --- Banner Tracking Variables ---
         let bannerClickCount = 0;
@@ -477,6 +514,45 @@
             setTimeout(() => {
                 toast.classList.remove('show');
             }, 3000);
+        }
+
+        // --- Star Rating Functions ---
+        function initStarRating() {
+            const stars = document.querySelectorAll('.star-rating i');
+            
+            stars.forEach(star => {
+                star.addEventListener('click', function() {
+                    const value = parseInt(this.getAttribute('data-value'));
+                    selectedRating = value;
+                    updateStars(value);
+                    showToast(`Rated ${value} star${value > 1 ? 's' : ''}`);
+                });
+                
+                star.addEventListener('mouseenter', function() {
+                    const value = parseInt(this.getAttribute('data-value'));
+                    updateStars(value, true);
+                });
+                
+                star.addEventListener('mouseleave', function() {
+                    updateStars(selectedRating);
+                });
+            });
+        }
+
+        function updateStars(rating, isHover = false) {
+            const stars = document.querySelectorAll('.star-rating i');
+            
+            stars.forEach(star => {
+                const starValue = parseInt(star.getAttribute('data-value'));
+                
+                if (isHover) {
+                    star.classList.toggle('hovered', starValue <= rating);
+                    star.classList.remove('selected');
+                } else {
+                    star.classList.toggle('selected', starValue <= rating);
+                    star.classList.remove('hovered');
+                }
+            });
         }
 
         // --- Auth State Observer ---
@@ -791,6 +867,157 @@
             }
         }
 
+        // --- FEEDBACK SUBMISSION FUNCTION WITH STAR RATING ---
+        function submitReview() {
+            const name = document.getElementById('reviewName').value.trim();
+            const text = document.getElementById('reviewText').value.trim();
+            const button = document.getElementById('submitFeedbackBtn');
+            
+            if (!name || !text) {
+                showToast("Please fill all fields", true);
+                return;
+            }
+            
+            if (text.length < 10) {
+                showToast("Review must be at least 10 characters", true);
+                return;
+            }
+            
+            if (selectedRating === 0) {
+                showToast("Please select a rating by clicking on stars", true);
+                return;
+            }
+            
+            // Disable button to prevent multiple clicks
+            button.disabled = true;
+            const originalText = button.textContent;
+            button.textContent = "Sending...";
+            
+            // Create review data WITH RATING
+            const reviewData = {
+                name: name,
+                text: text,
+                rating: selectedRating,  // Add rating here
+                timestamp: Date.now(),
+                date: new Date().toISOString(),
+                userEmail: currentUser ? currentUser.email : 'Anonymous',
+                userId: currentUser ? currentUser.uid : 'anonymous',
+                status: 'new'
+            };
+            
+            // Save to Firebase
+            db.ref('reviews').push(reviewData)
+                .then(() => {
+                    // Success
+                    showToast(`✓ Thank you! Your ${selectedRating}-star rating has been submitted.`);
+                    
+                    // Clear form and reset rating
+                    document.getElementById('reviewName').value = '';
+                    document.getElementById('reviewText').value = '';
+                    selectedRating = 0;
+                    updateStars(0);
+                    
+                    // Log success
+                    console.log('Feedback with rating saved to Firebase:', reviewData);
+                    
+                    // Also save to local storage for backup
+                    try {
+                        const localReviews = JSON.parse(localStorage.getItem('tasteviva_reviews') || '[]');
+                        localReviews.push({
+                            ...reviewData,
+                            localSaved: true
+                        });
+                        localStorage.setItem('tasteviva_reviews', JSON.stringify(localReviews));
+                        console.log('Feedback with rating saved to local storage');
+                    } catch (e) {
+                        console.log('Local storage save skipped');
+                    }
+                })
+                .catch((error) => {
+                    // Error
+                    console.error('Firebase error:', error);
+                    showToast("Error: Could not submit feedback. Please try again.", true);
+                    
+                    // Fallback: Save to local storage
+                    try {
+                        const localReviews = JSON.parse(localStorage.getItem('tasteviva_reviews') || '[]');
+                        localReviews.push({
+                            ...reviewData,
+                            error: error.message,
+                            localSaved: true
+                        });
+                        localStorage.setItem('tasteviva_reviews', JSON.stringify(localReviews));
+                        showToast("Feedback saved locally. We'll sync when online.");
+                    } catch (e) {
+                        showToast("Please check your internet connection", true);
+                    }
+                })
+                .finally(() => {
+                    // Re-enable button
+                    button.disabled = false;
+                    button.textContent = originalText;
+                });
+        }
+
+        // --- Initialize Database Structure ---
+        function initializeDatabase() {
+            // Check if reviews node exists, if not create it
+            db.ref('reviews').once('value')
+                .then(snapshot => {
+                    if (!snapshot.exists()) {
+                        // Create initial structure
+                        db.ref('reviews').set({
+                            welcome: {
+                                name: "Admin",
+                                text: "Welcome to Taste Viva Life feedback system!",
+                                rating: 5,
+                                timestamp: Date.now(),
+                                userEmail: "admin@tasteviva.com",
+                                status: "active"
+                            }
+                        }).then(() => {
+                            console.log("Database initialized successfully");
+                        });
+                    } else {
+                        console.log("Database already initialized");
+                    }
+                })
+                .catch(error => {
+                    console.error("Database check error:", error);
+                });
+        }
+
+        // --- Sync Local Reviews to Firebase ---
+        function syncLocalReviews() {
+            try {
+                const localReviews = JSON.parse(localStorage.getItem('tasteviva_reviews') || '[]');
+                if (localReviews.length > 0 && currentUser) {
+                    console.log(`Found ${localReviews.length} local reviews to sync`);
+                    
+                    localReviews.forEach(review => {
+                        if (review.localSaved && !review.synced) {
+                            db.ref('reviews').push({
+                                name: review.name,
+                                text: review.text,
+                                rating: review.rating,
+                                timestamp: review.timestamp,
+                                userEmail: currentUser.email,
+                                userId: currentUser.uid,
+                                syncedFromLocal: true
+                            }).then(() => {
+                                console.log('Local review synced to Firebase');
+                                // Remove from local storage after successful sync
+                                const updatedReviews = localReviews.filter(r => r.timestamp !== review.timestamp);
+                                localStorage.setItem('tasteviva_reviews', JSON.stringify(updatedReviews));
+                            });
+                        }
+                    });
+                }
+            } catch (e) {
+                console.log('No local reviews to sync');
+            }
+        }
+
         // --- Other Functions ---
         function whatsappRedirect(reason) {
             const url = `https://wa.me/923194879958?text=Hello Taste Viva Life, I have a ${reason}.`;
@@ -800,33 +1027,6 @@
         function contactService(service) {
             const url = `https://wa.me/923194879958?text=I want to buy service: ${service}.`;
             window.open(url, '_blank');
-        }
-
-        function submitReview() {
-            const name = document.getElementById('reviewName').value;
-            const text = document.getElementById('reviewText').value;
-            
-            if(!name || !text) {
-                showToast("Please fill all fields", true);
-                return;
-            }
-            
-            try {
-                db.ref('reviews').push({
-                    name: name,
-                    text: text,
-                    date: Date.now(),
-                    userEmail: currentUser ? currentUser.email : 'Anonymous'
-                }).then(() => {
-                    document.getElementById('reviewName').value = '';
-                    document.getElementById('reviewText').value = '';
-                    showToast("Thank you for your review!");
-                }).catch(error => {
-                    showToast("Error submitting review: " + error.message, true);
-                });
-            } catch (error) {
-                showToast("Error: " + error.message, true);
-            }
         }
 
         function searchFun() {
@@ -847,6 +1047,18 @@
         document.addEventListener('DOMContentLoaded', function() {
             loadRecipes();
             updateAuthUI();
+            initializeDatabase();
+            initStarRating();  // Initialize star rating system
+            
+            // Check Firebase connection
+            const connectedRef = db.ref(".info/connected");
+            connectedRef.on("value", function(snap) {
+                if (snap.val() === true) {
+                    console.log("Firebase Connected ✓");
+                } else {
+                    console.warn("Firebase Not Connected");
+                }
+            });
             
             // Close modal when clicking outside
             window.onclick = function(event) {
@@ -863,13 +1075,29 @@
                 }
             });
             
+            // Auto-sync local reviews when user logs in
+            auth.onAuthStateChanged((user) => {
+                if (user) {
+                    setTimeout(syncLocalReviews, 2000);
+                }
+            });
+            
             // Track banner impression on load
             setTimeout(() => {
                 if (document.getElementById('premiumBannerAd')) {
                     console.log('Banner ad impression recorded - Optimal CTR placement');
-                    // You can add Firebase tracking for impressions here
                 }
             }, 1500);
+            
+            // Add form validation
+            const reviewText = document.getElementById('reviewText');
+            reviewText.addEventListener('input', function() {
+                if (this.value.length < 10 && this.value.length > 0) {
+                    this.style.borderColor = '#ff4757';
+                } else {
+                    this.style.borderColor = '#ddd';
+                }
+            });
         });
     </script>
     
