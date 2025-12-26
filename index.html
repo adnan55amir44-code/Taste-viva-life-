@@ -2,1696 +2,876 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-    <meta name="description" content="Taste Viva Life - Discover the best gourmet recipes with step-by-step video tutorials and downloadable PDF guides. Cook restaurant-quality meals at home!">
-    <meta name="keywords" content="Recipes, Cooking, Food, PDF Recipes, Taste Viva Life, Gourmet Cooking, Step-by-Step Recipes, Cooking Videos">
-    <title>Taste Viva Life | Premium Recipes & Cooking Guides</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taste Viva Life | Premium Food & Recipes</title>
     
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&family=Dancing+Script:wght@500;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Pacifico&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 
     <style>
         :root {
-            --primary: #e74c3c;
-            --primary-dark: #c0392b;
-            --primary-light: #ff7675;
-            --secondary: #2c3e50;
-            --secondary-light: #34495e;
-            --accent: #f39c12;
-            --success: #27ae60;
-            --light: #f9f9f9;
-            --light-gray: #f5f5f5;
-            --medium-gray: #e0e0e0;
-            --dark-gray: #7f8c8d;
-            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            --shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.15);
-            --radius: 16px;
-            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
-            
-            /* Responsive font sizes */
-            --fs-h1: clamp(2.2rem, 5vw, 3rem);
-            --fs-h2: clamp(1.6rem, 4vw, 2.2rem);
-            --fs-h3: clamp(1.3rem, 3vw, 1.6rem);
-            --fs-body: clamp(15px, 2.5vw, 17px);
-            --fs-small: clamp(13px, 2vw, 15px);
+            --brand-color: #ff4757;
+            --secondary-color: #2ed573;
+            --accent-color: #ffa502;
+            --dark-bg: #1e272e;
+            --light-bg: #f5f6fa;
+            --glass: rgba(255, 255, 255, 0.9);
         }
-        
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            -webkit-tap-highlight-color: transparent;
-        }
-        
-        html {
-            font-size: 16px;
-            scroll-behavior: smooth;
-            scroll-padding-top: 80px;
-        }
-        
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #f9f9f9 100%);
-            color: #333;
-            line-height: 1.7;
-            min-height: 100vh;
-            position: relative;
-        }
-        
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at 20% 80%, rgba(231, 76, 60, 0.05) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 20%, rgba(52, 152, 219, 0.05) 0%, transparent 50%);
-            z-index: -1;
-        }
-        
-        /* Enhanced Header */
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Quicksand', sans-serif; }
+        body { background: var(--light-bg); color: var(--dark-bg); scroll-behavior: smooth; overflow-x: hidden; }
+
+        /* --- Custom Animations --- */
+        @keyframes shine { 100% { left: 125%; } }
+        @keyframes pulse-red { 0% { box-shadow: 0 0 0 0 rgba(255, 71, 87, 0.7); } 70% { box-shadow: 0 0 0 15px rgba(255, 71, 87, 0); } 100% { box-shadow: 0 0 0 0 rgba(255, 71, 87, 0); } }
+        @keyframes gradientLogo { 0% { color: #ff4757; } 50% { color: #ffa502; } 100% { color: #2ed573; } }
+
+        /* --- Header --- */
         header {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 15px 5%;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 3px solid var(--primary);
-            transition: var(--transition);
+            position: fixed; top: 0; width: 100%; padding: 15px 5%;
+            background: var(--glass); backdrop-filter: blur(10px);
+            display: flex; justify-content: space-between; align-items: center;
+            z-index: 1000; box-shadow: 0 4px 20px rgba(0,0,0,0.1);
         }
+        .logo { font-family: 'Pacifico', cursive; font-size: 2rem; animation: gradientLogo 5s infinite; cursor: pointer; }
         
-        .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        
-        .logo {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(1.6rem, 4vw, 1.9rem);
-            font-weight: 700;
-            color: var(--primary);
-            text-decoration: none;
+        nav ul { display: flex; list-style: none; gap: 20px; }
+        nav a { text-decoration: none; color: #333; font-weight: bold; font-size: 0.95rem; transition: 0.3s; }
+        nav a:hover { color: var(--brand-color); transform: scale(1.1); }
+
+        /* --- User Auth Display --- */
+        .user-info {
             display: flex;
             align-items: center;
             gap: 10px;
-            transition: var(--transition);
         }
-        
-        .logo:hover {
-            transform: translateY(-2px);
+        .user-name {
+            color: var(--brand-color);
+            font-weight: bold;
         }
-        
-        .logo i {
-            font-size: 1.4em;
-            background: linear-gradient(45deg, var(--primary), var(--primary-light));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .tagline {
-            font-family: 'Dancing Script', cursive;
-            font-size: clamp(1rem, 2vw, 1.2rem);
-            color: var(--secondary);
-            font-weight: 600;
-            margin-left: 10px;
-            opacity: 0.9;
-        }
-        
-        .auth-status {
-            font-size: var(--fs-small);
-            font-weight: 600;
-            color: var(--secondary);
-            background: rgba(52, 152, 219, 0.1);
-            padding: 10px 20px;
-            border-radius: 50px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            border: 2px solid transparent;
-            transition: var(--transition);
-        }
-        
-        .auth-status:hover {
-            background: rgba(52, 152, 219, 0.2);
-            border-color: var(--primary);
-        }
-        
-        .auth-status a {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 700;
-            padding: 4px 12px;
+        .btn-logout {
+            background: #ff6b81;
+            padding: 8px 15px;
             border-radius: 20px;
-            background: rgba(231, 76, 60, 0.1);
-            transition: var(--transition);
-        }
-        
-        .auth-status a:hover {
-            background: var(--primary);
-            color: white;
-            transform: translateY(-2px);
-        }
-        
-        /* Enhanced Hero Section */
-        .hero {
-            background: linear-gradient(135deg, rgba(44, 62, 80, 0.9) 0%, rgba(231, 76, 60, 0.8) 100%),
-                        url('https://images.unsplash.com/photo-1565958011703-44f9829ba187?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            padding: clamp(50px, 8vw, 80px) 5%;
-            text-align: center;
-            color: white;
-            margin-bottom: 40px;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
-            animation: shimmer 3s infinite;
-        }
-        
-        @keyframes shimmer {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
-        }
-        
-        .hero-content {
-            max-width: 900px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .hero h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: var(--fs-h1);
-            margin-bottom: 20px;
-            font-weight: 700;
-            line-height: 1.2;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-            background: linear-gradient(45deg, #fff, #ffeaa7);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: fadeInUp 1s ease;
-        }
-        
-        .hero p {
-            font-size: clamp(1.1rem, 2.5vw, 1.3rem);
-            max-width: 700px;
-            margin: 0 auto 30px;
-            opacity: 0.95;
-            line-height: 1.8;
-            animation: fadeInUp 1s ease 0.2s both;
-        }
-        
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .search-container {
-            max-width: 800px;
-            margin: 30px auto 0;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: var(--radius);
-            padding: 25px;
-            box-shadow: var(--shadow);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            animation: fadeInUp 1s ease 0.4s both;
-        }
-        
-        .search-box {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-        
-        .search-input-group {
-            flex: 1;
-            min-width: 250px;
-            position: relative;
-        }
-        
-        .search-input-group i {
-            position: absolute;
-            left: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--dark-gray);
-            z-index: 1;
-        }
-        
-        input, select {
-            padding: 16px 20px 16px 50px;
-            border-radius: 12px;
-            border: 2px solid var(--medium-gray);
-            outline: none;
-            width: 100%;
-            font-size: var(--fs-body);
-            transition: var(--transition);
-            background: white;
-            font-family: 'Poppins', sans-serif;
-        }
-        
-        input:focus, select:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 4px rgba(231, 76, 60, 0.2);
-            transform: translateY(-2px);
-        }
-        
-        .search-btn {
-            background: linear-gradient(135deg, var(--primary), var(--primary-light));
             color: white;
             border: none;
-            border-radius: 12px;
-            padding: 16px 40px;
             cursor: pointer;
-            font-weight: 600;
-            font-size: var(--fs-body);
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            min-width: 150px;
-            justify-content: center;
+            font-size: 0.9rem;
         }
-        
-        .search-btn:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 10px 25px rgba(231, 76, 60, 0.4);
+
+        /* --- Global Button Design --- */
+        .btn-modern {
+            padding: 12px 30px; border-radius: 50px; border: none; 
+            background: linear-gradient(45deg, var(--brand-color), #ff6b81);
+            color: white; font-weight: bold; cursor: pointer; position: relative;
+            overflow: hidden; transition: 0.4s; box-shadow: 0 5px 15px rgba(255, 71, 87, 0.3);
         }
-        
-        .search-btn:active {
-            transform: translateY(-1px);
+        .btn-modern:after {
+            content: ''; position: absolute; top: 0; left: -75%; width: 50%; height: 100%;
+            background: rgba(255, 255, 255, 0.2); transform: skewX(-25deg);
         }
-        
-        /* Stats Section */
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 25px;
-            margin: 40px auto;
-            max-width: 1200px;
-            padding: 0 5%;
+        .btn-modern:hover:after { animation: shine 0.75s; }
+        .btn-modern:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(255, 71, 87, 0.5); }
+
+        /* --- Sections Layout --- */
+        section { padding: 100px 8%; min-height: 80vh; border-bottom: 1px solid #eee; }
+        .title-center { text-align: center; margin-bottom: 50px; }
+        .title-center h2 { font-size: 3rem; font-family: 'Montserrat', sans-serif; color: var(--dark-bg); }
+        .title-center p { color: #7f8c8d; font-size: 1.1rem; }
+
+        /* --- 1. HOME SECTION (Banner) --- */
+        #home {
+            height: 100vh; background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://source.unsplash.com/1600x900/?cooking,chef');
+            background-size: cover; background-position: center; display: flex;
+            flex-direction: column; justify-content: center; align-items: center; color: white; text-align: center;
         }
-        
-        .stat-item {
-            text-align: center;
-            background: white;
-            padding: 30px 20px;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-            position: relative;
-            overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+        #home h1 { font-size: 4.5rem; text-shadow: 2px 2px 10px rgba(0,0,0,0.5); }
+        .search-area { background: white; padding: 10px; border-radius: 50px; display: flex; width: 90%; max-width: 600px; margin-top: 30px; }
+        .search-area input { flex: 1; border: none; outline: none; padding-left: 20px; font-size: 1rem; }
+
+        /* --- 2. ABOUT SECTION --- */
+        #about { background: white; display: flex; align-items: center; gap: 50px; flex-wrap: wrap; }
+        .about-text { flex: 1; min-width: 300px; }
+        .about-img { flex: 1; min-width: 300px; border-radius: 20px; overflow: hidden; box-shadow: 20px 20px 0 var(--brand-color); }
+        .about-img img { width: 100%; transition: 0.5s; }
+        .about-img:hover img { transform: scale(1.1); }
+
+        /* --- 3. ALL RECIPE SECTION --- */
+        .recipe-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .recipe-card {
+            background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            transition: 0.4s; border: 1px solid #eee; position: relative;
         }
-        
-        .stat-item::before {
-            content: '';
+        .recipe-card:hover { transform: scale(1.03); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        .recipe-img { width: 100%; height: 230px; object-fit: cover; }
+        .recipe-content { padding: 25px; }
+
+        /* --- PDF Lock Overlay --- */
+        .pdf-lock-overlay {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary), var(--accent));
-        }
-        
-        .stat-item:hover {
-            transform: translateY(-10px);
-            box-shadow: var(--shadow-hover);
-        }
-        
-        .stat-number {
-            font-size: clamp(2rem, 4vw, 2.5rem);
-            font-weight: 800;
-            background: linear-gradient(45deg, var(--primary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            line-height: 1.2;
-            margin-bottom: 5px;
-        }
-        
-        .stat-label {
-            font-size: var(--fs-small);
-            color: var(--secondary);
-            font-weight: 600;
-            letter-spacing: 0.5px;
-        }
-        
-        /* Main Content */
-        .container {
-            padding: 0 5%;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-        
-        .section-title {
-            font-family: 'Playfair Display', serif;
-            font-size: var(--fs-h2);
-            margin-bottom: 30px;
-            color: var(--secondary);
-            position: relative;
-            padding-bottom: 15px;
-            display: inline-block;
-        }
-        
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 70px;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary), var(--accent));
-            border-radius: 2px;
-        }
-        
-        /* Recipe Grid */
-        .recipe-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 30px;
-            margin-bottom: 60px;
-        }
-        
-        .card {
-            background: white;
-            border-radius: var(--radius);
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
+            height: 100%;
+            background: rgba(0,0,0,0.8);
             display: flex;
             flex-direction: column;
-            height: 100%;
-            position: relative;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .card:hover {
-            transform: translateY(-15px);
-            box-shadow: var(--shadow-hover);
-        }
-        
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(231, 76, 60, 0.1) 0%, transparent 50%);
+            justify-content: center;
+            align-items: center;
+            color: white;
+            border-radius: 20px;
             opacity: 0;
-            transition: var(--transition);
+            transition: opacity 0.3s;
+            padding: 20px;
+            text-align: center;
         }
-        
-        .card:hover::before {
+        .recipe-card:hover .pdf-lock-overlay {
             opacity: 1;
         }
-        
-        .media-area {
-            height: 240px;
-            position: relative;
+
+        /* --- 4. SERVICES SECTION --- */
+        #services { background: var(--dark-bg); color: white; }
+        #services .title-center h2 { color: white; }
+        .service-container { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; }
+        .service-box {
+            background: rgba(255,255,255,0.05); padding: 40px; border-radius: 20px; width: 350px;
+            text-align: center; transition: 0.4s; border: 1px solid rgba(255,255,255,0.1);
+        }
+        .service-box:hover { background: var(--brand-color); transform: translateY(-10px); }
+        .service-box i { font-size: 3rem; margin-bottom: 20px; color: var(--accent-color); }
+
+        /* --- 5. CONTACT SECTION --- */
+        .contact-flex { display: flex; gap: 40px; flex-wrap: wrap; }
+        .contact-info { flex: 1; background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .contact-form { flex: 1.5; background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .form-group input, .form-group textarea { width: 100%; padding: 15px; margin-bottom: 20px; border: 1px solid #ddd; border-radius: 10px; }
+
+        /* --- HIGH-CLICK BANNER AD STYLES --- */
+        #premiumBannerAd {
+            max-width: 728px;
+            margin: 25px auto;
+            text-align: center;
+            border-radius: 12px;
             overflow: hidden;
+            box-shadow: 0 6px 20px rgba(255, 71, 87, 0.25);
+            border: 2px solid #ff4757;
+            position: relative;
         }
-        
-        .media-area img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.8s cubic-bezier(0.215, 0.61, 0.355, 1);
+        #bannerAdContainer {
+            background: #f8f9fa;
+            padding: 15px;
+            min-height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        
-        .card:hover .media-area img {
-            transform: scale(1.1) rotate(1deg);
+
+        /* --- Floating Elements --- */
+        .whatsapp-float {
+            position: fixed; bottom: 30px; right: 30px; background: #25D366; color: white;
+            width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center;
+            align-items: center; font-size: 30px; box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            z-index: 1000; cursor: pointer; animation: pulse-red 2s infinite;
         }
-        
-        .video-badge {
+
+        /* --- Modal --- */
+        .modal {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8); z-index: 2000; justify-content: center; align-items: center;
+        }
+        .modal-box { 
+            background: white; 
+            padding: 40px; 
+            border-radius: 20px; 
+            width: 90%; 
+            max-width: 400px; 
+            text-align: center;
+            position: relative;
+        }
+        .close-modal {
             position: absolute;
             top: 15px;
-            right: 15px;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: white;
-            padding: 6px 15px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-            z-index: 2;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
-        }
-        
-        .content {
-            padding: 25px;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 15px;
-            gap: 10px;
-        }
-        
-        .cat-badge {
-            background: linear-gradient(135deg, #ffeaa7, #fab1a0);
-            color: #d63031;
-            padding: 6px 15px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        
-        .time-badge {
-            background: linear-gradient(135deg, #dfe6e9, #b2bec3);
-            color: var(--secondary);
-            padding: 6px 12px;
-            border-radius: 6px;
-            font-size: 12px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        
-        .card h3 {
-            font-size: var(--fs-h3);
-            margin-bottom: 12px;
-            color: var(--secondary);
-            line-height: 1.4;
-            font-weight: 700;
-        }
-        
-        .card p {
-            font-size: var(--fs-body);
-            color: var(--dark-gray);
-            margin-bottom: 20px;
-            flex-grow: 1;
-            line-height: 1.6;
-        }
-        
-        .btn {
-            padding: 14px 25px;
-            border: none;
-            border-radius: 10px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            font-size: var(--fs-body);
-            min-height: 50px;
-            position: relative;
-            overflow: hidden;
-            z-index: 1;
-        }
-        
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-            transition: 0.5s;
-            z-index: -1;
-        }
-        
-        .btn:hover::before {
-            left: 100%;
-        }
-        
-        .btn-pdf {
-            background: linear-gradient(135deg, var(--secondary), var(--secondary-light));
-            color: white;
-        }
-        
-        .btn-pdf:hover {
-            background: linear-gradient(135deg, var(--secondary-light), var(--secondary));
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(44, 62, 80, 0.3);
-        }
-        
-        .btn-login {
-            background: linear-gradient(135deg, var(--primary), var(--primary-light));
-            color: white;
-            width: 100%;
-        }
-        
-        .btn-login:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(231, 76, 60, 0.3);
-        }
-        
-        /* Footer */
-        footer {
-            background: linear-gradient(135deg, var(--secondary) 0%, #1a252f 100%);
-            color: white;
-            padding: 60px 5% 30px;
-            margin-top: 80px;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        footer::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary), var(--accent));
-        }
-        
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        .footer-section h3 {
-            font-size: var(--fs-h3);
-            margin-bottom: 20px;
-            color: white;
-            position: relative;
-            padding-bottom: 10px;
-        }
-        
-        .footer-section h3::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 50px;
-            height: 3px;
-            background: var(--primary);
-        }
-        
-        .footer-links {
-            list-style: none;
-        }
-        
-        .footer-links li {
-            margin-bottom: 12px;
-            position: relative;
-        }
-        
-        .footer-links li::before {
-            content: '▶';
-            position: absolute;
-            left: -20px;
-            color: var(--primary);
-            opacity: 0;
-            transition: var(--transition);
-        }
-        
-        .footer-links li:hover::before {
-            opacity: 1;
-            left: -15px;
-        }
-        
-        .footer-links a {
-            color: #ddd;
-            text-decoration: none;
-            transition: var(--transition);
-            display: inline-block;
-            padding: 4px 0;
-        }
-        
-        .footer-links a:hover {
-            color: var(--primary);
-            transform: translateX(5px);
-        }
-        
-        .social-icons {
-            display: flex;
-            gap: 15px;
-            margin-top: 20px;
-        }
-        
-        .social-icons a {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            color: white;
-            text-decoration: none;
-            transition: var(--transition);
-        }
-        
-        .social-icons a:hover {
-            background: var(--primary);
-            transform: translateY(-3px) rotate(5deg);
-        }
-        
-        .copyright {
-            text-align: center;
-            margin-top: 50px;
-            padding-top: 25px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: #aaa;
-            font-size: var(--fs-small);
-        }
-        
-        /* Floating Chat Button */
-        .fab {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: linear-gradient(135deg, var(--primary), var(--primary-light));
-            color: white;
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            box-shadow: 0 10px 30px rgba(231, 76, 60, 0.4);
-            z-index: 900;
-            cursor: pointer;
-            border: none;
-            transition: var(--transition);
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-        
-        .fab:hover {
-            transform: scale(1.1) rotate(10deg);
-            box-shadow: 0 15px 35px rgba(231, 76, 60, 0.5);
-        }
-        
-        /* Enhanced Modals */
-        .modal {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.7);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-            backdrop-filter: blur(10px);
-            padding: 20px;
-            animation: fadeIn 0.3s ease;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        
-        .modal-box {
-            background: white;
-            width: 100%;
-            max-width: 500px;
-            padding: 40px;
-            border-radius: 20px;
-            position: relative;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
-            animation: slideUp 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(50px) scale(0.9);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
-        }
-        
-        .close {
-            position: absolute;
-            top: 20px;
             right: 20px;
-            font-size: 24px;
+            font-size: 1.5rem;
             cursor: pointer;
-            color: var(--dark-gray);
-            transition: var(--transition);
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            background: rgba(0,0,0,0.05);
+            color: #666;
         }
-        
-        .close:hover {
-            color: var(--primary);
-            background: rgba(231, 76, 60, 0.1);
-            transform: rotate(90deg);
-        }
-        
-        .modal h2 {
-            font-family: 'Playfair Display', serif;
-            color: var(--secondary);
-            margin-bottom: 20px;
-            font-size: var(--fs-h2);
-        }
-        
-        .modal p {
-            color: var(--dark-gray);
-            margin-bottom: 25px;
-            line-height: 1.6;
-        }
-        
-        .modal input, .modal textarea {
+        .modal-input {
             width: 100%;
-            padding: 16px 20px;
-            margin-bottom: 20px;
-            border: 2px solid var(--medium-gray);
+            padding: 12px 15px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        /* --- Toast Notification --- */
+        .toast {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            padding: 15px 25px;
+            background: var(--brand-color);
+            color: white;
             border-radius: 10px;
-            font-size: var(--fs-body);
-            transition: var(--transition);
-            background: #fafafa;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            z-index: 3000;
+            transform: translateX(150%);
+            transition: transform 0.3s;
         }
-        
-        .modal input:focus, .modal textarea:focus {
-            border-color: var(--primary);
-            background: white;
-            box-shadow: 0 0 0 4px rgba(231, 76, 60, 0.1);
-            transform: translateY(-2px);
+        .toast.show {
+            transform: translateX(0);
         }
-        
-        /* Chat History */
-        #chat-history {
-            height: 250px;
-            overflow-y: auto;
-            border: 2px solid #eee;
-            margin: 20px 0;
-            padding: 20px;
-            border-radius: 10px;
-            background: #fafafa;
-            font-size: var(--fs-body);
-            scroll-behavior: smooth;
-        }
-        
-        .message {
-            margin-bottom: 15px;
-            animation: fadeIn 0.3s ease;
-        }
-        
-        .user-message {
-            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
-            padding: 12px 18px;
-            border-radius: 15px 15px 15px 5px;
-            margin-left: 40px;
-            position: relative;
-        }
-        
-        .user-message::before {
-            content: '👨‍🍳';
-            position: absolute;
-            left: -35px;
-            top: 0;
-            font-size: 24px;
-        }
-        
-        .chef-message {
-            background: linear-gradient(135deg, #f1f8e9, #dcedc8);
-            padding: 12px 18px;
-            border-radius: 15px 15px 5px 15px;
-            margin-right: 40px;
-            position: relative;
-        }
-        
-        .chef-message::before {
-            content: '👨‍🍳';
-            position: absolute;
-            right: -35px;
-            top: 0;
-            font-size: 24px;
-        }
-        
-        /* Loading Animation */
-        .loading-spinner {
-            display: inline-block;
-            width: 30px;
-            height: 30px;
-            border: 3px solid rgba(231, 76, 60, 0.2);
-            border-radius: 50%;
-            border-top-color: var(--primary);
-            animation: spin 1s linear infinite;
-        }
-        
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-        
-        /* Responsive Design */
+
+        /* --- Responsive --- */
         @media (max-width: 768px) {
-            .search-box {
+            #home h1 { font-size: 2.5rem; }
+            header { flex-direction: column; gap: 10px; }
+            nav ul { gap: 10px; font-size: 0.8rem; }
+            .user-info {
                 flex-direction: column;
+                gap: 5px;
             }
-            
-            .search-btn {
-                width: 100%;
+            #premiumBannerAd {
+                margin: 15px auto;
+                border-radius: 8px;
             }
-            
-            .recipe-grid {
-                grid-template-columns: 1fr;
+            #bannerAdContainer {
+                padding: 10px;
+                min-height: 70px;
             }
-            
-            .stats {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 15px;
-            }
-            
-            .modal-box {
-                padding: 30px 20px;
-            }
-            
-            .fab {
-                width: 60px;
-                height: 60px;
-                bottom: 20px;
-                right: 20px;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .stats {
-                grid-template-columns: 1fr;
-            }
-            
-            .hero {
-                padding: 40px 5%;
-            }
-            
-            .hero h1 {
-                font-size: 1.8rem;
-            }
-            
-            .card h3 {
-                font-size: 1.2rem;
-            }
-        }
-        
-        /* Accessibility */
-        .sr-only {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            padding: 0;
-            margin: -1px;
-            overflow: hidden;
-            clip: rect(0, 0, 0, 0);
-            white-space: nowrap;
-            border: 0;
-        }
-        
-        /* Focus Styles */
-        button:focus, input:focus, select:focus, textarea:focus {
-            outline: 3px solid var(--primary);
-            outline-offset: 2px;
         }
     </style>
 </head>
 <body>
 
-    <!-- Header -->
     <header>
-        <div class="logo-container">
-            <a href="#" class="logo">
-                <i class="fas fa-utensils"></i>
-                <div>
-                    Taste Viva Life
-                    <div class="tagline">Savor the Flavor</div>
-                </div>
-            </a>
-        </div>
-        <div id="user-display" class="auth-status">
-            <i class="fas fa-user-circle"></i>
-            <span id="user-status">Guest Mode</span>
-            <a href="#" onclick="openAuthModal()">Sign In</a>
+        <div class="logo">Taste Viva Life</div>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#recipes">Recipes</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="#privacy">Privacy</a></li>
+            </ul>
+        </nav>
+        <div id="authButtons">
+            <!-- Dynamic content will be inserted here -->
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-content">
-            <h1>Master Culinary Arts at Home</h1>
-            <p>Unlock premium recipes with step-by-step video tutorials and downloadable PDF guides. Transform your cooking skills today!</p>
+    <section id="home">
+        <h1 class="animate__animated animate__fadeInDown">Taste the Life with Taste Viva</h1>
+        <p class="animate__animated animate__fadeInUp">Premium Quality Recipes & Food Consultancy</p>
+        <div class="search-area animate__animated animate__zoomIn">
+            <input type="text" id="recipeSearch" placeholder="Search for recipes (Biryani, Pasta...)" onkeyup="searchFun()">
+            <button class="btn-modern"><i class="fas fa-search"></i></button>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="about-img">
+            <img src="https://source.unsplash.com/600x400/?chef-cooking" alt="About Us">
+        </div>
+        <div class="about-text">
+            <h2>About Taste Viva Life</h2>
+            <p style="margin: 20px 0; line-height: 1.8;">Welcome to <b>Taste Viva Life</b>. Hum aapko behtareen recipes aur food services provide karte hain. Hamara maqsad har ghar mein hotel jaisa zayeqa pohanchana hai. Hamari recipes expert chefs ki taraf se banayi jati hain jo SEO friendly aur easy to follow hain.</p>
+            <button class="btn-modern">Learn More</button>
+        </div>
+    </section>
+
+    <section id="recipes">
+        <div class="title-center">
+            <h2>Our Special Recipes</h2>
+            <p>Download PDF for complete step-by-step guides</p>
+        </div>
+        
+        <!-- =========================================== -->
+        <!-- HIGH-CLICK BANNER AD - OPTIMAL PLACEMENT -->
+        <!-- Positioned right before recipes for maximum CTR -->
+        <!-- =========================================== -->
+        <div id="premiumBannerAd">
+            <!-- Banner Headline -->
+            <div style="
+                background: linear-gradient(90deg, #ff4757, #ff6b81);
+                color: white;
+                padding: 12px;
+                font-weight: bold;
+                font-size: 1.1rem;
+                font-family: 'Montserrat', sans-serif;
+            ">
+                <i class="fas fa-crown"></i> PREMIUM PARTNER OFFER
+            </div>
             
-            <div class="search-container">
-                <div class="search-box">
-                    <div class="search-input-group">
-                        <i class="fas fa-search"></i>
-                        <input type="text" id="search" placeholder="Search recipes (e.g., Biryani, Pasta, Salad)...">
+            <!-- Banner Iframe - Your Ad Code -->
+            <div id="bannerAdContainer">
+                <script>
+                  atOptions = {
+                    'key' : '54081a728fab0b99a7637ef5cba7c973',
+                    'format' : 'iframe',
+                    'height' : 60,
+                    'width' : 468,
+                    'params' : {}
+                  };
+                </script>
+                <script src="https://www.highperformanceformat.com/54081a728fab0b99a7637ef5cba7c973/invoke.js"></script>
+            </div>
+            
+            <!-- Action Button -->
+            <div style="
+                background: #f1f2f6;
+                padding: 12px;
+                border-top: 1px dashed #ddd;
+            ">
+                <button onclick="trackBannerClick()" style="
+                    background: linear-gradient(45deg, #2ed573, #1dd1a1);
+                    color: white;
+                    border: none;
+                    padding: 10px 25px;
+                    border-radius: 50px;
+                    font-weight: bold;
+                    cursor: pointer;
+                    transition: 0.3s;
+                    box-shadow: 0 4px 10px rgba(46, 213, 115, 0.3);
+                ">
+                    <i class="fas fa-external-link-alt"></i> Click for Special Food Offers
+                </button>
+                <p style="margin-top: 8px; font-size: 0.85rem; color: #666;">
+                    Click-through rate (CTR) helps us improve your experience.
+                </p>
+            </div>
+        </div>
+
+        <div class="recipe-grid" id="recipeList">
+            <!-- Recipes will be loaded here -->
+        </div>
+    </section>
+
+    <section id="services">
+        <div class="title-center">
+            <h2>Paid Services</h2>
+            <p>Aap humse niche di gayi premium services le sakte hain.</p>
+        </div>
+        <div class="service-container">
+            <div class="service-box">
+                <i class="fas fa-utensils"></i>
+                <h3>Menu Planning</h3>
+                <p>Hum aapke event ya restaurant ke liye mukammal menu plan karte hain.</p>
+                <button class="btn-modern" style="margin-top:20px;" onclick="contactService('Menu Planning')">Buy Now</button>
+            </div>
+            <div class="service-box">
+                <i class="fas fa-video"></i>
+                <h3>Online Classes</h3>
+                <p>Private classes for learning international cuisines.</p>
+                <button class="btn-modern" style="margin-top:20px;" onclick="contactService('Online Class')">Join Now</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="title-center">
+            <h2>Contact Us</h2>
+            <p>Hum 2 ghante mein aapka jawab denge.</p>
+        </div>
+        <div class="contact-flex">
+            <div class="contact-info">
+                <h3>Direct Connect</h3>
+                <p style="margin: 20px 0;"><i class="fas fa-envelope"></i> <a href="mailto:adnan55amir44@gmail.com">adnan55amir44@gmail.com</a></p>
+                <p><i class="fab fa-whatsapp"></i> +92 319 4879958</p>
+                <hr style="margin: 20px 0;">
+                <p>Agar koi recipe kaam nahi kar rahi ya koi shikayat hai, toh be-jijhak humse raabta karein.</p>
+            </div>
+            <div class="contact-form">
+                <div class="form-group">
+                    <input type="text" id="reviewName" placeholder="Your Name">
+                    <textarea id="reviewText" rows="5" placeholder="Your Message / Review"></textarea>
+                    <div style="margin-bottom: 20px; color: gold;">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
                     </div>
-                    <div class="search-input-group">
-                        <i class="fas fa-filter"></i>
-                        <select id="filter">
-                            <option value="All">All Categories</option>
-                            <option value="Breakfast">Breakfast</option>
-                            <option value="Lunch">Lunch</option>
-                            <option value="Dinner">Dinner</option>
-                            <option value="Dessert">Dessert</option>
-                            <option value="Vegetarian">Vegetarian</option>
-                        </select>
-                    </div>
-                    <button class="search-btn" onclick="renderRecipes()">
-                        <i class="fas fa-search"></i> Search Recipes
-                    </button>
+                    <button class="btn-modern" onclick="submitReview()">Send Feedback</button>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Stats -->
-    <div class="stats">
-        <div class="stat-item">
-            <div class="stat-number">500+</div>
-            <div class="stat-label">Premium Recipes</div>
+    <section id="privacy" style="background: #f1f2f6;">
+        <div class="title-center">
+            <h2>Privacy Policy</h2>
         </div>
-        <div class="stat-item">
-            <div class="stat-number">120+</div>
-            <div class="stat-label">Video Tutorials</div>
+        <div style="max-width: 800px; margin: 0 auto; background: white; padding: 40px; border-radius: 20px;">
+            <p><b>Note:</b> Taste Viva Life ek professional platform hai. Faltu messages ya spamming karne wale users ko foran <b>Block</b> kar diya jayega. Hum aapki privacy ka pura khayal rakhte hain aur aapka data kisi teesre bande ko share nahi kiya jata.</p>
         </div>
-        <div class="stat-item">
-            <div class="stat-number">50K+</div>
-            <div class="stat-label">Happy Cooks</div>
-        </div>
-        <div class="stat-item">
-            <div class="stat-number">24/7</div>
-            <div class="stat-label">Chef Support</div>
-        </div>
-    </div>
+    </section>
 
-    <!-- Main Content -->
-    <main class="container">
-        <h2 class="section-title">Featured Recipes</h2>
-        <div id="recipe-grid" class="recipe-grid">
-            <!-- Recipes loaded dynamically -->
-        </div>
-    </main>
-
-    <!-- Footer -->
-    <footer>
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>Taste Viva Life</h3>
-                <p>Transforming home cooking with premium recipes, expert tutorials, and culinary inspiration from around the world.</p>
-                <div class="social-icons">
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-youtube"></i></a>
-                    <a href="#"><i class="fab fa-pinterest-p"></i></a>
-                </div>
-            </div>
-            
-            <div class="footer-section">
-                <h3>Quick Links</h3>
-                <ul class="footer-links">
-                    <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
-                    <li><a href="#"><i class="fas fa-utensils"></i> Recipes</a></li>
-                    <li><a href="#"><i class="fas fa-list"></i> Categories</a></li>
-                    <li><a href="#"><i class="fas fa-lightbulb"></i> Cooking Tips</a></li>
-                    <li><a href="#"><i class="fas fa-info-circle"></i> About Us</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-section">
-                <h3>Legal</h3>
-                <ul class="footer-links">
-                    <li><a href="#"><i class="fas fa-shield-alt"></i> Privacy Policy</a></li>
-                    <li><a href="#"><i class="fas fa-file-contract"></i> Terms of Service</a></li>
-                    <li><a href="#"><i class="fas fa-cookie"></i> Cookie Policy</a></li>
-                    <li><a href="#"><i class="fas fa-envelope"></i> Contact Us</a></li>
-                </ul>
-            </div>
-        </div>
-        
-        <div class="copyright">
-            &copy; 2024 Taste Viva Life. All rights reserved. | Crafted with <i class="fas fa-heart" style="color: var(--primary);"></i> for food lovers worldwide.
-        </div>
+    <footer style="padding: 40px; text-align:center; background: #333; color: white;">
+        <p>© 2025 Taste Viva Life | Designed for Perfection</p>
     </footer>
 
-    <!-- Floating Chat Button -->
-    <button class="fab" onclick="handleChat()" aria-label="Chat with our chefs">
-        <i class="fas fa-comment-dots"></i>
-    </button>
+    <div class="whatsapp-float" onclick="whatsappRedirect('General Inquiry')">
+        <i class="fab fa-whatsapp"></i>
+    </div>
 
     <!-- Auth Modal -->
-    <div id="auth-modal" class="modal">
+    <div id="authModal" class="modal">
         <div class="modal-box">
-            <span class="close" onclick="closeModal('auth-modal')" aria-label="Close modal">&times;</span>
-            <h2 id="auth-title"><i class="fas fa-user-circle"></i> Welcome Back!</h2>
-            <p>Sign in to access premium features including PDF downloads and live chat with our master chefs.</p>
-            
-            <input type="email" id="email" placeholder="Email Address" aria-label="Email address">
-            <input type="password" id="pass" placeholder="Password" aria-label="Password">
-            
-            <button class="btn btn-login" onclick="doAuth()" id="auth-btn">
-                <i class="fas fa-sign-in-alt"></i> Sign In
-            </button>
-            
-            <div style="text-align: center; margin-top: 25px;">
-                <p style="font-size: 14px; color: #666;">
-                    Don't have an account? 
-                    <a href="#" style="color: var(--primary); font-weight: 600;" onclick="toggleAuth()">Create Account</a>
-                </p>
-                <p style="font-size: 12px; color: #999; margin-top: 15px;">
-                    By continuing, you agree to our <a href="#" style="color: var(--primary);">Terms</a> and <a href="#" style="color: var(--primary);">Privacy Policy</a>
-                </p>
+            <span class="close-modal" onclick="closeAuth()">&times;</span>
+            <h2 id="mTitle">Login</h2>
+            <div id="signupOnly" style="display:none;">
+                <input type="text" id="mName" class="modal-input" placeholder="Full Name">
+                <input type="text" id="mPhone" class="modal-input" placeholder="WhatsApp Number">
             </div>
+            <input type="email" id="mEmail" class="modal-input" placeholder="Email">
+            <input type="password" id="mPass" class="modal-input" placeholder="Password">
+            <button class="btn-modern" style="width:100%; margin-top: 20px;" onclick="performAuth()">Submit</button>
+            <p onclick="toggleAuth()" id="mToggle" style="margin-top:15px; cursor:pointer; color:blue;">New Account?</p>
         </div>
     </div>
 
-    <!-- Chat Modal -->
-    <div id="chat-modal" class="modal">
-        <div class="modal-box">
-            <span class="close" onclick="closeModal('chat-modal')" aria-label="Close chat">&times;</span>
-            <h3><i class="fas fa-comments"></i> Chat with Master Chefs</h3>
-            <p style="font-size: 14px; color: #666; margin-bottom: 20px;">Get personalized cooking advice from our culinary experts in real-time.</p>
-            
-            <div id="chat-history"></div>
-            
-            <textarea id="msg-input" placeholder="Type your cooking question here..." rows="3"></textarea>
-            <button class="btn btn-login" onclick="sendMessage()">
-                <i class="fas fa-paper-plane"></i> Send Message
-            </button>
-        </div>
-    </div>
+    <!-- Toast Notification -->
+    <div class="toast" id="toast"></div>
 
-    <!-- Firebase SDKs -->
+    <!-- Firebase Scripts -->
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
 
     <script>
-        // Fixed Firebase Configuration
+        // --- Firebase Config ---
         const firebaseConfig = {
-            apiKey: "AIzaSyCJxPo8K6unEMUKyPAVOqA-6mWpjldEjWE",
-            authDomain: "cooking-4f4ba.firebaseapp.com",
-            databaseURL: "https://cooking-4f4ba-default-rtdb.firebaseio.com",
-            projectId: "cooking-4f4ba",
-            storageBucket: "cooking-4f4ba.firebasestorage.app",
-            messagingSenderId: "105635290604",
-            appId: "1:105635290604:web:15f4655d5340742306f4c9"
+            apiKey: "AIzaSyARB_fC7Pe0pFeDvtSDak2R3Qcgnn4QS6A",
+            authDomain: "taste-viva-pro.firebaseapp.com",
+            databaseURL: "https://taste-viva-pro-default-rtdb.firebaseio.com",
+            projectId: "taste-viva-pro",
+            storageBucket: "taste-viva-pro.firebasestorage.app",
+            messagingSenderId: "970610712940",
+            appId: "1:970610712940:web:b40783c8074b26693c5349"
         };
         
         // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+        
         const db = firebase.database();
-
-        // Global Variables
-        let recipes = [];
-        let isLoginMode = true;
+        const auth = firebase.auth();
+        
+        // --- Global Variables ---
+        let isLogin = true;
         let currentUser = null;
-        let chatListener = null;
+        let pendingPdfUrl = null;
+        
+        // --- Banner Tracking Variables ---
+        let bannerClickCount = 0;
+        const BANNER_ID = 'premium_food_banner_001';
 
-        // Initialize Application
-        document.addEventListener('DOMContentLoaded', function() {
-            initializeApp();
-            setupEventListeners();
+        // --- Toast Notification Function ---
+        function showToast(message, isError = false) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.style.background = isError ? '#ff4757' : '#2ed573';
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // --- Auth State Observer ---
+        auth.onAuthStateChanged((user) => {
+            currentUser = user;
+            updateAuthUI();
+            
+            if (user && pendingPdfUrl) {
+                // User just logged in and there's a pending PDF download
+                window.open(pendingPdfUrl, '_blank');
+                pendingPdfUrl = null;
+            }
         });
 
-        function initializeApp() {
-            // Load Recipes
-            db.ref('recipes').on('value', snap => {
-                recipes = [];
-                snap.forEach(child => {
-                    recipes.push({ id: child.key, ...child.val() });
+        // --- Update UI Based on Auth State ---
+        function updateAuthUI() {
+            const authButtons = document.getElementById('authButtons');
+            
+            if (currentUser) {
+                // User is logged in
+                authButtons.innerHTML = `
+                    <div class="user-info">
+                        <span class="user-name">${currentUser.email ? currentUser.email.split('@')[0] : 'User'}</span>
+                        <button class="btn-logout" onclick="logout()">Logout</button>
+                    </div>
+                `;
+            } else {
+                // User is not logged in
+                authButtons.innerHTML = `
+                    <button class="btn-modern" onclick="openAuth('login')">Login / Sign Up</button>
+                `;
+            }
+        }
+
+        // --- Banner Click Tracking Function ---
+        function trackBannerClick() {
+            bannerClickCount++;
+            
+            // Show visual feedback
+            const btn = event.target.closest('button');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-check"></i> Redirecting...';
+            btn.style.background = 'linear-gradient(45deg, #ffa502, #ffbe76)';
+            
+            // Track in Firebase if user is logged in
+            if (currentUser) {
+                db.ref('bannerClicks/' + currentUser.uid).push({
+                    bannerId: BANNER_ID,
+                    clickedAt: firebase.database.ServerValue.TIMESTAMP,
+                    userEmail: currentUser.email,
+                    pageLocation: window.location.hash || 'home'
+                }).then(() => {
+                    console.log('Banner click tracked successfully');
+                }).catch(error => {
+                    console.error('Tracking error:', error);
                 });
-                renderRecipes();
-            });
-
-            // Monitor Auth State
-            auth.onAuthStateChanged(user => {
-                currentUser = user;
-                if (user) {
-                    updateUserStatus(user);
-                    loadChatHistory();
-                    closeModal('auth-modal');
-                } else {
-                    showGuestMode();
-                }
-            });
-        }
-
-        function setupEventListeners() {
-            // Search Input Listeners
-            document.getElementById('search').addEventListener('input', renderRecipes);
-            document.getElementById('filter').addEventListener('change', renderRecipes);
-            
-            // Enter Key for Search
-            document.getElementById('search').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') renderRecipes();
-            });
-            
-            // Enter Key for Chat
-            document.getElementById('msg-input')?.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter' && !e.shiftKey) {
-                    e.preventDefault();
-                    sendMessage();
-                }
-            });
-        }
-
-        function updateUserStatus(user) {
-            const displayName = user.email.split('@')[0];
-            document.getElementById('user-display').innerHTML = `
-                <i class="fas fa-user-check"></i>
-                <span id="user-status">${displayName}</span>
-                <a href="#" onclick="logout()" style="color: var(--primary); margin-left: 8px;">Logout</a>
-            `;
-        }
-
-        function showGuestMode() {
-            document.getElementById('user-display').innerHTML = `
-                <i class="fas fa-user"></i>
-                <span id="user-status">Guest Mode</span>
-                <a href="#" onclick="openAuthModal()" style="color: var(--primary); margin-left: 8px;">Sign In</a>
-            `;
-        }
-
-        // Render Recipes
-        function renderRecipes() {
-            const term = document.getElementById('search').value.toLowerCase();
-            const cat = document.getElementById('filter').value;
-            const grid = document.getElementById('recipe-grid');
-            
-            if (recipes.length === 0) {
-                grid.innerHTML = `
-                    <div style="grid-column: 1 / -1; text-align: center; padding: 60px 20px;">
-                        <div class="loading-spinner" style="margin: 0 auto 20px;"></div>
-                        <h3 style="color: var(--secondary); margin-bottom: 10px;">Loading Recipes</h3>
-                        <p style="color: var(--dark-gray);">Fetching delicious recipes from our database...</p>
-                    </div>
-                `;
-                return;
             }
-
-            const filteredRecipes = recipes.filter(recipe => {
-                const matchesCategory = cat === 'All' || recipe.category === cat;
-                const matchesSearch = !term || 
-                    recipe.title.toLowerCase().includes(term) ||
-                    recipe.desc.toLowerCase().includes(term) ||
-                    recipe.category.toLowerCase().includes(term);
-                return matchesCategory && matchesSearch;
-            });
-
-            if (filteredRecipes.length === 0) {
-                grid.innerHTML = `
-                    <div style="grid-column: 1 / -1; text-align: center; padding: 60px 20px; background: white; border-radius: var(--radius);">
-                        <i class="fas fa-search" style="font-size: 48px; color: #ddd; margin-bottom: 20px;"></i>
-                        <h3 style="color: var(--secondary); margin-bottom: 10px;">No Recipes Found</h3>
-                        <p style="color: var(--dark-gray);">Try a different search term or category.</p>
-                    </div>
-                `;
-                return;
-            }
-
-            grid.innerHTML = filteredRecipes.map(recipe => {
-                const cookingTime = Math.floor(Math.random() * 60) + 15;
-                const hasVideo = recipe.videoUrl && recipe.videoUrl.includes('youtu');
-                
-                let mediaContent = '';
-                if (hasVideo) {
-                    const videoId = extractYouTubeId(recipe.videoUrl);
-                    mediaContent = `
-                        <div class="media-area">
-                            <iframe src="https://www.youtube.com/embed/${videoId}" 
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                    allowfullscreen>
-                            </iframe>
-                            <div class="video-badge">
-                                <i class="fas fa-play-circle"></i> Video Guide
-                            </div>
-                        </div>
-                    `;
-                } else {
-                    mediaContent = `
-                        <div class="media-area">
-                            <img src="${recipe.imgUrl || 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80'}" 
-                                 alt="${recipe.title}"
-                                 loading="lazy">
-                        </div>
-                    `;
-                }
-
-                return `
-                    <div class="card">
-                        ${mediaContent}
-                        <div class="content">
-                            <div class="card-header">
-                                <span class="cat-badge">${recipe.category}</span>
-                                <span class="time-badge">
-                                    <i class="far fa-clock"></i> ${cookingTime} min
-                                </span>
-                            </div>
-                            <h3>${recipe.title}</h3>
-                            <p>${recipe.desc.substring(0, 120)}${recipe.desc.length > 120 ? '...' : ''}</p>
-                            <button class="btn btn-pdf" onclick="downloadRecipe('${recipe.id}')">
-                                <i class="fas fa-file-pdf"></i> Download Recipe PDF
-                            </button>
-                        </div>
-                        <div id="pdf-${recipe.id}" class="pdf-template" style="display: none;">
-                            <h1>${recipe.title}</h1>
-                            <div style="display: flex; justify-content: space-between; margin: 20px 0; padding: 20px; background: #f9f9f9; border-radius: 10px;">
-                                <div><strong>Category:</strong> ${recipe.category}</div>
-                                <div><strong>Prep Time:</strong> ${cookingTime} minutes</div>
-                            </div>
-                            <h3>Recipe Description</h3>
-                            <p>${recipe.desc}</p>
-                            <div style="margin-top: 30px; padding: 20px; background: #fff3e0; border-radius: 10px;">
-                                <p><strong>Note:</strong> For detailed video tutorial, visit Taste Viva Life website.</p>
-                                <p style="margin-top: 10px; font-size: 14px;">Recipe provided by Taste Viva Life &copy; ${new Date().getFullYear()}</p>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        function extractYouTubeId(url) {
-            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
-            const match = url.match(regExp);
-            return (match && match[2].length === 11) ? match[2] : null;
-        }
-
-        // Download PDF
-        function downloadRecipe(recipeId) {
-            if (!currentUser) {
-                openAuthModal();
-                return;
-            }
-
-            const element = document.getElementById(`pdf-${recipeId}`);
-            const button = event.target.closest('.btn-pdf');
-            const originalText = button.innerHTML;
             
-            button.innerHTML = '<div class="loading-spinner"></div> Generating PDF...';
-            button.disabled = true;
-
-            const options = {
-                margin: 10,
-                filename: `${recipeId}_Recipe.pdf`,
-                image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: 2, useCORS: true },
-                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-            };
-
-            element.style.display = 'block';
+            // Calculate and show CTR (simulated for demo)
+            setTimeout(() => {
+                const simulatedImpressions = 1000;
+                const simulatedCTR = ((bannerClickCount / simulatedImpressions) * 100).toFixed(2);
+                showToast(`Banner CTR: ${simulatedCTR}% | Thank you!`);
+            }, 500);
             
-            html2pdf().set(options).from(element).save().then(() => {
-                element.style.display = 'none';
-                button.innerHTML = originalText;
-                button.disabled = false;
-                
-                // Success notification
-                showNotification('PDF downloaded successfully!', 'success');
-            }).catch(err => {
-                console.error('PDF Error:', err);
-                button.innerHTML = originalText;
-                button.disabled = false;
-                element.style.display = 'none';
-                showNotification('Failed to generate PDF', 'error');
-            });
+            // Reset button after 1.5 seconds
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+                btn.style.background = 'linear-gradient(45deg, #2ed573, #1dd1a1)';
+            }, 1500);
         }
 
-        // Authentication Functions
-        function openAuthModal() {
-            document.getElementById('auth-modal').style.display = 'flex';
-            document.getElementById('email').focus();
+        // --- Auth Functions ---
+        function openAuth(type) {
+            if (type === 'signup') {
+                isLogin = false;
+                document.getElementById('mTitle').innerText = "Sign Up";
+                document.getElementById('signupOnly').style.display = 'block';
+                document.getElementById('mToggle').innerText = "Already have an account? Login";
+            } else {
+                isLogin = true;
+                document.getElementById('mTitle').innerText = "Login";
+                document.getElementById('signupOnly').style.display = 'none';
+                document.getElementById('mToggle').innerText = "New Account? Sign Up";
+            }
+            
+            // Clear form
+            document.getElementById('mName').value = '';
+            document.getElementById('mPhone').value = '';
+            document.getElementById('mEmail').value = '';
+            document.getElementById('mPass').value = '';
+            
+            document.getElementById('authModal').style.display = 'flex';
         }
 
-        function doAuth() {
-            const email = document.getElementById('email').value.trim();
-            const password = document.getElementById('pass').value.trim();
+        function closeAuth() {
+            document.getElementById('authModal').style.display = 'none';
+        }
+
+        function toggleAuth() {
+            isLogin = !isLogin;
+            if (isLogin) {
+                document.getElementById('mTitle').innerText = "Login";
+                document.getElementById('signupOnly').style.display = 'none';
+                document.getElementById('mToggle').innerText = "New Account? Sign Up";
+            } else {
+                document.getElementById('mTitle').innerText = "Sign Up";
+                document.getElementById('signupOnly').style.display = 'block';
+                document.getElementById('mToggle').innerText = "Already have an account? Login";
+            }
+        }
+
+        function performAuth() {
+            const email = document.getElementById('mEmail').value;
+            const password = document.getElementById('mPass').value;
             
             if (!email || !password) {
-                showNotification('Please fill in all fields', 'error');
+                showToast("Please fill email and password", true);
                 return;
             }
-
-            const authBtn = document.getElementById('auth-btn');
-            const originalText = authBtn.innerHTML;
-            authBtn.innerHTML = '<div class="loading-spinner"></div> Processing...';
-            authBtn.disabled = true;
-
-            if (isLoginMode) {
+            
+            if (isLogin) {
+                // Login
                 auth.signInWithEmailAndPassword(email, password)
                     .then((userCredential) => {
-                        return updateUserProfile(userCredential.user.uid, email);
+                        showToast("Welcome back!");
+                        closeAuth();
                     })
-                    .then(() => {
-                        authBtn.innerHTML = originalText;
-                        authBtn.disabled = false;
-                        showNotification('Welcome back!', 'success');
-                    })
-                    .catch(error => {
-                        authBtn.innerHTML = originalText;
-                        authBtn.disabled = false;
-                        showNotification(`Login failed: ${error.message}`, 'error');
+                    .catch((error) => {
+                        let errorMessage = "Login failed. ";
+                        switch(error.code) {
+                            case 'auth/user-not-found':
+                                errorMessage += "User not found.";
+                                break;
+                            case 'auth/wrong-password':
+                                errorMessage += "Wrong password.";
+                                break;
+                            case 'auth/invalid-email':
+                                errorMessage += "Invalid email.";
+                                break;
+                            default:
+                                errorMessage += error.message;
+                        }
+                        showToast(errorMessage, true);
                     });
             } else {
+                // Sign Up
+                const name = document.getElementById('mName').value;
+                const phone = document.getElementById('mPhone').value;
+                
+                if (!name || !phone) {
+                    showToast("Please fill all fields", true);
+                    return;
+                }
+                
+                if (password.length < 6) {
+                    showToast("Password must be at least 6 characters", true);
+                    return;
+                }
+                
                 auth.createUserWithEmailAndPassword(email, password)
                     .then((userCredential) => {
-                        return createUserProfile(userCredential.user.uid, email);
+                        const user = userCredential.user;
+                        
+                        // Save additional user info to database
+                        return db.ref('users/' + user.uid).set({
+                            name: name,
+                            phone: phone,
+                            email: email,
+                            createdAt: firebase.database.ServerValue.TIMESTAMP
+                        });
                     })
                     .then(() => {
-                        authBtn.innerHTML = originalText;
-                        authBtn.disabled = false;
-                        showNotification('Account created successfully!', 'success');
-                        toggleAuth(); // Switch to login mode
+                        showToast("Account created successfully!");
+                        closeAuth();
                     })
-                    .catch(error => {
-                        authBtn.innerHTML = originalText;
-                        authBtn.disabled = false;
-                        showNotification(`Registration failed: ${error.message}`, 'error');
+                    .catch((error) => {
+                        let errorMessage = "Sign up failed. ";
+                        switch(error.code) {
+                            case 'auth/email-already-in-use':
+                                errorMessage += "Email already in use. Try login.";
+                                break;
+                            case 'auth/weak-password':
+                                errorMessage += "Password too weak.";
+                                break;
+                            case 'auth/invalid-email':
+                                errorMessage += "Invalid email.";
+                                break;
+                            default:
+                                errorMessage += error.message;
+                        }
+                        showToast(errorMessage, true);
                     });
             }
-        }
-
-        function updateUserProfile(uid, email) {
-            return db.ref('users/' + uid).update({
-                email: email,
-                lastLogin: Date.now(),
-                name: email.split('@')[0]
-            });
-        }
-
-        function createUserProfile(uid, email) {
-            return db.ref('users/' + uid).set({
-                email: email,
-                banned: false,
-                joined: Date.now(),
-                lastLogin: Date.now(),
-                name: email.split('@')[0],
-                role: "user"
-            });
         }
 
         function logout() {
             auth.signOut()
                 .then(() => {
-                    showNotification('Logged out successfully', 'success');
-                    if (chatListener) {
-                        chatListener.off();
-                        chatListener = null;
-                    }
+                    showToast("Logged out successfully");
+                    updateAuthUI();
                 })
-                .catch(error => {
-                    showNotification(`Logout failed: ${error.message}`, 'error');
+                .catch((error) => {
+                    showToast("Logout failed: " + error.message, true);
                 });
         }
 
-        // Chat Functions
-        function handleChat() {
-            if (!currentUser) {
-                openAuthModal();
-                showNotification('Please sign in to chat with chefs', 'info');
-                return;
+        // --- Recipe Functions ---
+        function loadRecipes() {
+            // Default recipes if Firebase is not accessible
+            const defaultRecipes = [
+                {
+                    id: 1,
+                    title: "Chicken Biryani",
+                    description: "Authentic Hyderabadi style chicken biryani recipe",
+                    image: "https://source.unsplash.com/300x230/?biryani",
+                    pdf: "https://example.com/biryani-recipe.pdf"
+                },
+                {
+                    id: 2,
+                    title: "Butter Chicken",
+                    description: "Creamy and delicious butter chicken recipe",
+                    image: "https://source.unsplash.com/300x230/?butter-chicken",
+                    pdf: "https://example.com/butter-chicken-recipe.pdf"
+                },
+                {
+                    id: 3,
+                    title: "Vegetable Pasta",
+                    description: "Healthy vegetable pasta with Italian herbs",
+                    image: "https://source.unsplash.com/300x230/?pasta",
+                    pdf: "https://example.com/pasta-recipe.pdf"
+                },
+                {
+                    id: 4,
+                    title: "Chocolate Cake",
+                    description: "Moist chocolate cake with frosting",
+                    image: "https://source.unsplash.com/300x230/?chocolate-cake",
+                    pdf: "https://example.com/cake-recipe.pdf"
+                }
+            ];
+
+            const recipeList = document.getElementById('recipeList');
+            
+            // Try to load from Firebase
+            try {
+                db.ref('recipes').once('value')
+                    .then((snapshot) => {
+                        if (snapshot.exists()) {
+                            const recipes = snapshot.val();
+                            displayRecipes(recipes);
+                        } else {
+                            // Use default recipes
+                            displayRecipes(defaultRecipes);
+                        }
+                    })
+                    .catch((error) => {
+                        console.error("Error loading recipes:", error);
+                        displayRecipes(defaultRecipes);
+                    });
+            } catch (error) {
+                console.error("Firebase error:", error);
+                displayRecipes(defaultRecipes);
             }
-            document.getElementById('chat-modal').style.display = 'flex';
-            document.getElementById('msg-input').focus();
         }
 
-        function sendMessage() {
-            const messageInput = document.getElementById('msg-input');
-            const text = messageInput.value.trim();
+        function displayRecipes(recipes) {
+            const recipeList = document.getElementById('recipeList');
+            recipeList.innerHTML = '';
             
-            if (!text || !currentUser) return;
-
-            const messageData = {
-                uid: currentUser.uid,
-                email: currentUser.email,
-                text: text,
-                reply: "",
-                timestamp: Date.now(),
-                status: "pending",
-                userName: currentUser.email.split('@')[0]
-            };
-
-            // Add message to chat history immediately
-            const chatHistory = document.getElementById('chat-history');
-            chatHistory.innerHTML += `
-                <div class="message">
-                    <div class="user-message">
-                        <strong>You:</strong> ${text}
-                        <div style="font-size: 11px; color: #666; text-align: right; margin-top: 5px;">
-                            Sending...
+            // Convert object to array if needed
+            const recipesArray = Array.isArray(recipes) ? recipes : Object.values(recipes);
+            
+            recipesArray.forEach(recipe => {
+                recipeList.innerHTML += `
+                    <div class="recipe-card">
+                        <img src="${recipe.image}" class="recipe-img" alt="${recipe.title}">
+                        <div class="recipe-content">
+                            <h3>${recipe.title}</h3>
+                            <p>${recipe.description}</p>
+                            <button class="btn-modern" style="margin-top:15px; width:100%;" 
+                                onclick="downloadRecipePdf('${recipe.pdf}', '${recipe.title}')">
+                                Download PDF
+                            </button>
+                        </div>
+                        <div class="pdf-lock-overlay">
+                            <i class="fas fa-lock" style="font-size: 2rem; margin-bottom: 10px;"></i>
+                            <p>Login required to download PDF</p>
                         </div>
                     </div>
-                </div>
-            `;
-            chatHistory.scrollTop = chatHistory.scrollHeight;
-            
-            // Clear input
-            messageInput.value = '';
-            
-            // Save to database
-            db.ref('messages').push(messageData)
-                .then(() => {
-                    // Update message status
-                    const messages = chatHistory.querySelectorAll('.user-message');
-                    const lastMessage = messages[messages.length - 1];
-                    lastMessage.innerHTML = lastMessage.innerHTML.replace('Sending...', 'Sent ✓');
-                })
-                .catch(error => {
-                    showNotification('Failed to send message', 'error');
-                });
+                `;
+            });
         }
 
-        function loadChatHistory() {
-            if (!currentUser || chatListener) return;
-            
-            chatListener = db.ref('messages')
-                .orderByChild('uid')
-                .equalTo(currentUser.uid)
-                .on('value', snapshot => {
-                    const chatHistory = document.getElementById('chat-history');
-                    chatHistory.innerHTML = '';
-                    
-                    if (!snapshot.exists()) {
-                        chatHistory.innerHTML = `
-                            <div style="text-align: center; padding: 40px 20px; color: #666;">
-                                <i class="fas fa-comment-slash" style="font-size: 48px; margin-bottom: 15px; opacity: 0.3;"></i>
-                                <p>No messages yet. Start a conversation with our chefs!</p>
-                            </div>
-                        `;
-                        return;
-                    }
-                    
-                    const messages = [];
-                    snapshot.forEach(child => {
-                        messages.push({ id: child.key, ...child.val() });
-                    });
-                    
-                    // Sort by timestamp
-                    messages.sort((a, b) => a.timestamp - b.timestamp);
-                    
-                    messages.forEach(msg => {
-                        const time = new Date(msg.timestamp).toLocaleTimeString([], { 
-                            hour: '2-digit', 
-                            minute: '2-digit' 
-                        });
-                        
-                        chatHistory.innerHTML += `
-                            <div class="message">
-                                <div class="user-message">
-                                    <strong>You:</strong> ${msg.text}
-                                    <div style="font-size: 11px; color: #666; text-align: right; margin-top: 5px;">
-                                        ${time}
-                                    </div>
-                                </div>
-                                ${msg.reply ? `
-                                    <div class="chef-message">
-                                        <strong>Chef:</strong> ${msg.reply}
-                                        <div style="font-size: 11px; color: #666; text-align: right; margin-top: 5px;">
-                                            ${new Date(msg.replyTimestamp || msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                                        </div>
-                                    </div>
-                                ` : ''}
-                            </div>
-                        `;
-                    });
-                    
-                    chatHistory.scrollTop = chatHistory.scrollHeight;
-                });
-        }
-
-        // Utility Functions
-        function toggleAuth() {
-            isLoginMode = !isLoginMode;
-            const title = document.getElementById('auth-title');
-            const btn = document.getElementById('auth-btn');
-            
-            if (isLoginMode) {
-                title.innerHTML = '<i class="fas fa-sign-in-alt"></i> Welcome Back!';
-                btn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Sign In';
+        function downloadRecipePdf(pdfUrl, recipeTitle) {
+            if (!currentUser) {
+                pendingPdfUrl = pdfUrl;
+                showToast("Please login first to download PDF", true);
+                openAuth('login');
             } else {
-                title.innerHTML = '<i class="fas fa-user-plus"></i> Create Account';
-                btn.innerHTML = '<i class="fas fa-user-plus"></i> Sign Up';
+                // Track download in database
+                db.ref('downloads/' + currentUser.uid).push({
+                    recipe: recipeTitle,
+                    pdfUrl: pdfUrl,
+                    downloadedAt: firebase.database.ServerValue.TIMESTAMP
+                }).then(() => {
+                    // Open PDF in new tab
+                    window.open(pdfUrl, '_blank');
+                    showToast(`Downloading ${recipeTitle} PDF`);
+                }).catch(error => {
+                    showToast("Failed to track download: " + error.message, true);
+                });
             }
         }
 
-        function closeModal(modalId) {
-            document.getElementById(modalId).style.display = 'none';
+        // --- Other Functions ---
+        function whatsappRedirect(reason) {
+            const url = `https://wa.me/923194879958?text=Hello Taste Viva Life, I have a ${reason}.`;
+            window.open(url, '_blank');
         }
 
-        function showNotification(message, type = 'info') {
-            // Remove existing notification
-            const existingNotification = document.querySelector('.notification');
-            if (existingNotification) {
-                existingNotification.remove();
+        function contactService(service) {
+            const url = `https://wa.me/923194879958?text=I want to buy service: ${service}.`;
+            window.open(url, '_blank');
+        }
+
+        function submitReview() {
+            const name = document.getElementById('reviewName').value;
+            const text = document.getElementById('reviewText').value;
+            
+            if(!name || !text) {
+                showToast("Please fill all fields", true);
+                return;
             }
             
-            // Create notification
-            const notification = document.createElement('div');
-            notification.className = `notification ${type}`;
-            notification.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                padding: 15px 25px;
-                border-radius: 10px;
-                color: white;
-                font-weight: 600;
-                z-index: 2000;
-                animation: slideInRight 0.3s ease;
-                box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-                display: flex;
-                align-items: center;
-                gap: 10px;
-            `;
+            try {
+                db.ref('reviews').push({
+                    name: name,
+                    text: text,
+                    date: Date.now(),
+                    userEmail: currentUser ? currentUser.email : 'Anonymous'
+                }).then(() => {
+                    document.getElementById('reviewName').value = '';
+                    document.getElementById('reviewText').value = '';
+                    showToast("Thank you for your review!");
+                }).catch(error => {
+                    showToast("Error submitting review: " + error.message, true);
+                });
+            } catch (error) {
+                showToast("Error: " + error.message, true);
+            }
+        }
+
+        function searchFun() {
+            const filter = document.getElementById('recipeSearch').value.toUpperCase();
+            const cards = document.querySelectorAll('.recipe-card');
             
-            // Set color based on type
-            const colors = {
-                success: '#27ae60',
-                error: '#e74c3c',
-                info: '#3498db',
-                warning: '#f39c12'
-            };
+            cards.forEach(card => {
+                const title = card.querySelector('h3').textContent.toUpperCase();
+                if (title.indexOf(filter) > -1) {
+                    card.style.display = "";
+                } else {
+                    card.style.display = "none";
+                }
+            });
+        }
+
+        // --- Initialize on Load ---
+        document.addEventListener('DOMContentLoaded', function() {
+            loadRecipes();
+            updateAuthUI();
             
-            notification.style.background = colors[type] || colors.info;
+            // Close modal when clicking outside
+            window.onclick = function(event) {
+                const modal = document.getElementById('authModal');
+                if (event.target == modal) {
+                    closeAuth();
+                }
+            }
             
-            // Add icon
-            const icons = {
-                success: 'fa-check-circle',
-                error: 'fa-exclamation-circle',
-                info: 'fa-info-circle',
-                warning: 'fa-exclamation-triangle'
-            };
+            // Enter key in search
+            document.getElementById('recipeSearch').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    searchFun();
+                }
+            });
             
-            notification.innerHTML = `
-                <i class="fas ${icons[type] || 'fa-info-circle'}"></i>
-                <span>${message}</span>
-            `;
-            
-            document.body.appendChild(notification);
-            
-            // Auto remove after 3 seconds
+            // Track banner impression on load
             setTimeout(() => {
-                notification.style.animation = 'slideOutRight 0.3s ease';
-                setTimeout(() => notification.remove(), 300);
-            }, 3000);
-        }
-
-        // Add animation keyframes for notification
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes slideInRight {
-                from {
-                    transform: translateX(100%);
-                    opacity: 0;
+                if (document.getElementById('premiumBannerAd')) {
+                    console.log('Banner ad impression recorded - Optimal CTR placement');
+                    // You can add Firebase tracking for impressions here
                 }
-                to {
-                    transform: translateX(0);
-                    opacity: 1;
-                }
-            }
-            @keyframes slideOutRight {
-                from {
-                    transform: translateX(0);
-                    opacity: 1;
-                }
-                to {
-                    transform: translateX(100%);
-                    opacity: 0;
-                }
-            }
-        `;
-        document.head.appendChild(style);
-
-        // Add sample recipes if database is empty
-        setTimeout(() => {
-            if (recipes.length === 0) {
-                recipes = [
-                    {
-                        id: "1",
-                        title: "Classic Beef Lasagna",
-                        desc: "A rich and hearty lasagna with layers of pasta, seasoned beef, creamy béchamel sauce, and melted cheese. Perfect for family dinners.",
-                        category: "Dinner",
-                        videoUrl: "https://www.youtube.com/watch?v=abcdefg"
-                    },
-                    {
-                        id: "2",
-                        title: "Avocado Toast Breakfast",
-                        desc: "Simple yet delicious avocado toast with cherry tomatoes, feta cheese, and a drizzle of olive oil. A healthy start to your day.",
-                        category: "Breakfast",
-                        imgUrl: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
-                    },
-                    {
-                        id: "3",
-                        title: "Chocolate Lava Cake",
-                        desc: "Decadent chocolate cake with a gooey molten center. Served warm with vanilla ice cream for the ultimate dessert experience.",
-                        category: "Dessert",
-                        videoUrl: "https://www.youtube.com/watch?v=hijklmn"
-                    }
-                ];
-                renderRecipes();
-            }
-        }, 2000);
+            }, 1500);
+        });
     </script>
+    
 </body>
 </html>
